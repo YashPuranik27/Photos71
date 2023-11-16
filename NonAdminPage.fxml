@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="370.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.NonAdminController">
+    <top>
+        <Label fx:id="usertitle" text="User's Albums" BorderPane.alignment="CENTER">
+            <font>
+                <Font size="16" />
+            </font>
+        </Label>
+    </top>
+    <left>
+        <ListView fx:id="albumsList" prefHeight="272.0" prefWidth="498.0"/>
+    </left>
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <TextField fx:id="EnteredAlbumName" alignment="CENTER" prefHeight="24.0" prefWidth="200.0" promptText="Enter Album Name"/>
+            <Button fx:id="openAlbum" onAction="#openAlbum" text="Open Album"/>
+            <Button fx:id="createAlbum" onAction="#createAlbum" text="Create Album"/>
+            <Button fx:id="renameAlbum" onAction="#renameAlbum" text="Rename Album"/>
+            <Button fx:id="deleteAlbum" onAction="#deleteAlbum" text="Delete Album"/>
+            <Button fx:id="search" onAction="#search" text="Search"/>
+            <Button fx:id="logout" onAction="#logOut" text="Logout" style="-fx-background-color: red; -fx-text-fill: white;"/>
+        </VBox>
+    </center>
+    <bottom>
+        <Label text="Album Name - #Photo - Earliest Date - Latest Date" BorderPane.alignment="CENTER"/>
+    </bottom>
+</BorderPane>
