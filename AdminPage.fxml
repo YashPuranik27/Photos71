@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.effect.DropShadow?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="photoalbum.AdminController" style="-fx-background-color: #f0f0f0;">
 
     <Button fx:id="LogOffButton" layoutX="14.0" layoutY="14.0" onAction="#logOut" text="Logout"
