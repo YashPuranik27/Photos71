@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Admin implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static final String DEFAULT_ADMIN_USERNAME = "admin";
+    private static final String DEFAULT_ADMIN_USERNAME = "admin"; // used by LoginController
     private List<User> users;
     private String username;
 
