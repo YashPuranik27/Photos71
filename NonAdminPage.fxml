@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.effect.DropShadow?>
 
-<BorderPane prefHeight="370.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.NonAdminController">
+<BorderPane prefHeight="370.0" prefWidth="669.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.NonAdminController">
     <top>
-        <Label fx:id="usertitle" text="User's Albums" BorderPane.alignment="CENTER">
-            <font>
-                <Font size="16" />
-            </font>
+        <Label fx:id="usertitle" text="User's Albums" BorderPane.alignment="CENTER" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;">
+            <effect>
+                <DropShadow offsetX="2" offsetY="2" color="#999999"/>
+            </effect>
         </Label>
     </top>
     <left>
@@ -18,15 +18,43 @@
     <center>
         <VBox alignment="CENTER" spacing="10">
             <TextField fx:id="EnteredAlbumName" alignment="CENTER" prefHeight="24.0" prefWidth="200.0" promptText="Enter Album Name"/>
-            <Button fx:id="openAlbum" onAction="#openAlbum" text="Open Album"/>
-            <Button fx:id="createAlbum" onAction="#createAlbum" text="Create Album"/>
-            <Button fx:id="renameAlbum" onAction="#renameAlbum" text="Rename Album"/>
-            <Button fx:id="deleteAlbum" onAction="#deleteAlbum" text="Delete Album"/>
-            <Button fx:id="search" onAction="#search" text="Search"/>
-            <Button fx:id="logout" onAction="#logOut" text="Logout" style="-fx-background-color: red; -fx-text-fill: white;"/>
+            <Button fx:id="openAlbum" onAction="#openAlbum" text="Open Album" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
+                <effect>
+                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
+                </effect>
+            </Button>
+            <Button fx:id="createAlbum" onAction="#createAlbum" text="Create Album" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
+                <effect>
+                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
+                </effect>
+            </Button>
+            <Button fx:id="renameAlbum" onAction="#renameAlbum" text="Rename Album" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
+                <effect>
+                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
+                </effect>
+            </Button>
+            <Button fx:id="deleteAlbum" onAction="#deleteAlbum" text="Delete Album" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
+                <effect>
+                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
+                </effect>
+            </Button>
+            <Button fx:id="search" onAction="#search" text="Search" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
+                <effect>
+                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
+                </effect>
+            </Button>
+            <Button fx:id="logout" onAction="#logOut" text="Logout" style="-fx-background-color: red; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
+                <effect>
+                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
+                </effect>
+            </Button>
         </VBox>
     </center>
     <bottom>
-        <Label text="Album Name - #Photo - Earliest Date - Latest Date" BorderPane.alignment="CENTER"/>
+        <Label text="Album Name - #Photo - Earliest Date - Latest Date" BorderPane.alignment="CENTER" style="-fx-font-size: 14px; -fx-text-fill: #666;">
+            <effect>
+                <DropShadow offsetX="1" offsetY="1" color="#999999"/>
+            </effect>
+        </Label>
     </bottom>
 </BorderPane>
