@@ -1,7 +1,13 @@
 package photoalbum;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
+
+import java.io.IOException;
 
 public class AdminController implements LogoutController {
 
@@ -22,7 +28,7 @@ public class AdminController implements LogoutController {
         refresh();
         if (!observableArrayList.isEmpty()) UserList.getSelectionModel().select(0);
     }
-  
+
     public void addUser(ActionEvent e) throws IOException {
         String userInput = Enteruser.getText().trim();
 
@@ -49,7 +55,7 @@ public class AdminController implements LogoutController {
     }
 
     private void showAlert(String title, String content) { // Helper method to show alerts. opens a new alert window
-        Alert alert = new Alert(AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
@@ -61,7 +67,7 @@ public class AdminController implements LogoutController {
         if (deleteIndex < 0) return; // No selection made, exit early
 
         String selectedItem = UserList.getSelectionModel().getSelectedItem(); // Get the selected item
-        Alert alert = new Alert(AlertType.CONFIRMATION, "Confirm you want to delete " + selectedItem + ".", ButtonType.OK, ButtonType.CANCEL);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirm you want to delete " + selectedItem + ".", ButtonType.OK, ButtonType.CANCEL);
         alert.setTitle("Confirm Deletion");
 
         ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL); // we use orElse to provide a default value
@@ -78,12 +84,16 @@ public class AdminController implements LogoutController {
             }
         }
     }
-  
+
     public void refresh() { // Refreshes the listview
         UserList.refresh();
         observableArrayList = FXCollections.observableArrayList(Photos.driver.admin.getUsernameList()); // Gets the list of usernames
         UserList.setItems(observableArrayList);
         UserList.refresh();
+    }
+
+    public void initialize(){
+        refresh();
     }
 
     public void logOut(ActionEvent e) throws IOException { // Logs out the user

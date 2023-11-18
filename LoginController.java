@@ -15,7 +15,7 @@ import javafx.scene.Scene;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 
-public class LoginController {
+public class LoginController implements Navigatable{
 
     @FXML
     Button loginButton;
@@ -39,20 +39,6 @@ public class LoginController {
         }
     }
 
-    private void switchScene(String fxmlPath, ActionEvent input) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(fxmlPath));
-        Parent sceneManager = loader.load();
-        Scene newScene = new Scene(sceneManager);
-        Stage primaryStage = (Stage) ((Node) input.getSource()).getScene().getWindow();
-        primaryStage.setScene(newScene);
-        primaryStage.show();
-
-        if (loader.getController() instanceof Initializable) {
-            ((Initializable) loader.getController()).initialize(null, null);
-        }
-    }
-
     private void showAlert(String title, String content, AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -61,4 +47,7 @@ public class LoginController {
         alert.showAndWait();
     }
 
+    private void addToUserData(){
+
+    }
 }

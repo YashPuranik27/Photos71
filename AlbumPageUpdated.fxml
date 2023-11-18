@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<TitledPane fx:id="titledPane" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="922.0" text="untitled" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.AlbumController">
+   <content>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="281.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="285.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="565.0" minWidth="10.0" prefWidth="372.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="283.0" minHeight="10.0" prefHeight="248.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <ListView fx:id="imageListview" prefHeight="223.0" prefWidth="256.0" />
+               </content>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ScrollPane>
+            <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="addPhoto" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo">
+                     <FlowPane.margin>
+                        <Insets right="10.0" />
+                     </FlowPane.margin></Button>
+                  <Button fx:id="removePhoto" mnemonicParsing="false" onAction="#removePhoto" text="Remove" />
+                  <Button fx:id="movePhoto" mnemonicParsing="false" onAction="#movePhoto" text="Move">
+                     <FlowPane.margin>
+                        <Insets left="20.0" />
+                     </FlowPane.margin></Button>
+                  <Button fx:id="copyPhoto" mnemonicParsing="false" onAction="#copyPhoto" text="Copy">
+                     <FlowPane.margin>
+                        <Insets left="10.0" />
+                     </FlowPane.margin></Button>
+                  <Button fx:id="filterSelector" mnemonicParsing="false" onAction="#search" prefHeight="25.0" prefWidth="187.0" text="Search Photos in Album">
+                     <FlowPane.margin>
+                        <Insets top="10.0" />
+                     </FlowPane.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#moveUp" text="^">
+                     <FlowPane.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </FlowPane.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#moveDown" text="v">
+                     <FlowPane.margin>
+                        <Insets left="5.0" top="10.0" />
+                     </FlowPane.margin>
+                  </Button>
+               </children>
+            </FlowPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <left>
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" text="Back" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="30.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </left>
+            </BorderPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <right>
+                  <Button fx:id="logout" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: red; -fx-text-fill: white;" text="Logout" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="30.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </right>
+            </BorderPane>
+            <BorderPane GridPane.columnIndex="2">
+               <center>
+                  <ImageView fx:id="photoDisplay" fitHeight="238.0" fitWidth="361.0" pickOnBounds="true" preserveRatio="true" />
+               </center>
+            </BorderPane>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+               <children>
+                  <ScrollPane prefHeight="133.0" prefWidth="246.0">
+                     <content>
+                        <ListView fx:id="tagList" prefHeight="130.0" prefWidth="269.0" />
+                     </content>
+                  </ScrollPane>
+                  <FlowPane prefHeight="33.0" prefWidth="260.0">
+                     <children>
+                        <TextField fx:id="tagInput" prefHeight="24.0" prefWidth="85.0" promptText="Tag Name" />
+                        <TextField fx:id="valueInput" prefHeight="24.0" prefWidth="85.0" promptText="Tag Value" />
+                        <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" text="Add" />
+                        <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" text="Delete" />
+                     </children>
+                  </FlowPane>
+                  <FlowPane prefHeight="34.0" prefWidth="272.0">
+                     <children>
+                        <TextField fx:id="captionInput" prefHeight="24.0" prefWidth="140.0" promptText="caption" />
+                        <Button fx:id="setCaption" mnemonicParsing="false" onAction="#addCaption" text="Set Caption" />
+                     </children>
+                  </FlowPane>
+                  <Button fx:id="displayImage" mnemonicParsing="false" onAction="#displayPhoto" text="Open Photo In Default System Viewer" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Details (autosaves as you type)">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextArea fx:id="detailTextArea" prefHeight="108.0" prefWidth="224.0" promptText="Enter photo details here" />
+               </children>
+            </VBox>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <left>
+                  <Button fx:id="previousPhoto" mnemonicParsing="false" onAction="#previousPhoto" text="Previous Photo" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="30.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </left>
+               <right>
+                  <Button fx:id="nextPhoto" mnemonicParsing="false" onAction="#nextPhoto" text="Next Photo" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="30.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </right>
+            </BorderPane>
+         </children>
+      </GridPane>
+   </content>
+</TitledPane>

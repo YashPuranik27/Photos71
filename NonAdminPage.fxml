@@ -1,60 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.effect.DropShadow?>
 
-<BorderPane prefHeight="370.0" prefWidth="669.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.NonAdminController">
-    <top>
-        <Label fx:id="usertitle" text="User's Albums" BorderPane.alignment="CENTER" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;">
-            <effect>
-                <DropShadow offsetX="2" offsetY="2" color="#999999"/>
-            </effect>
-        </Label>
-    </top>
-    <left>
-        <ListView fx:id="albumsList" prefHeight="272.0" prefWidth="498.0"/>
-    </left>
-    <center>
-        <VBox alignment="CENTER" spacing="10">
-            <TextField fx:id="EnteredAlbumName" alignment="CENTER" prefHeight="24.0" prefWidth="200.0" promptText="Enter Album Name"/>
-            <Button fx:id="openAlbum" onAction="#openAlbum" text="Open Album" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
-                <effect>
-                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
-                </effect>
-            </Button>
-            <Button fx:id="createAlbum" onAction="#createAlbum" text="Create Album" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
-                <effect>
-                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
-                </effect>
-            </Button>
-            <Button fx:id="renameAlbum" onAction="#renameAlbum" text="Rename Album" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
-                <effect>
-                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
-                </effect>
-            </Button>
-            <Button fx:id="deleteAlbum" onAction="#deleteAlbum" text="Delete Album" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
-                <effect>
-                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
-                </effect>
-            </Button>
-            <Button fx:id="search" onAction="#search" text="Search" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
-                <effect>
-                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
-                </effect>
-            </Button>
-            <Button fx:id="logout" onAction="#logOut" text="Logout" style="-fx-background-color: red; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;">
-                <effect>
-                    <DropShadow offsetX="2" offsetY="2" color="#999999"/>
-                </effect>
-            </Button>
-        </VBox>
-    </center>
-    <bottom>
-        <Label text="Album Name - #Photo - Earliest Date - Latest Date" BorderPane.alignment="CENTER" style="-fx-font-size: 14px; -fx-text-fill: #666;">
-            <effect>
-                <DropShadow offsetX="1" offsetY="1" color="#999999"/>
-            </effect>
-        </Label>
-    </bottom>
-</BorderPane>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<TitledPane fx:id="titledPane" animated="false" collapsible="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.NonAdminController">
+   <content>
+      <BorderPane prefHeight="370.0" prefWidth="669.0" style="-fx-background-color: #f0f0f0;">
+          <bottom>
+              <Label style="-fx-font-size: 14px; -fx-text-fill: #666;" text="Album Name - #Photo - Earliest Date - Latest Date" BorderPane.alignment="CENTER">
+                  <effect>
+                      <DropShadow color="#999999" offsetX="1" offsetY="1" />
+                  </effect>
+              </Label>
+          </bottom>
+         <right>
+              <VBox alignment="CENTER" prefHeight="320.0" prefWidth="224.0" spacing="10" BorderPane.alignment="CENTER">
+                  <Button fx:id="openAlbum" onAction="#openAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Open Album">
+                      <effect>
+                          <DropShadow color="#999999" offsetX="2" offsetY="2" />
+                      </effect>
+                  </Button>
+                  <Button fx:id="createAlbum" onAction="#createAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Create Album">
+                      <effect>
+                          <DropShadow color="#999999" offsetX="2" offsetY="2" />
+                      </effect>
+                  </Button>
+                  <Button fx:id="renameAlbum" onAction="#renameAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Rename Album">
+                      <effect>
+                          <DropShadow color="#999999" offsetX="2" offsetY="2" />
+                      </effect>
+                  </Button>
+                  <Button fx:id="deleteAlbum" onAction="#deleteAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Delete Album">
+                      <effect>
+                          <DropShadow color="#999999" offsetX="2" offsetY="2" />
+                      </effect>
+                  </Button>
+               <Button fx:id="searchButton" onAction="#search" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Search All Photos">
+                  <effect>
+                     <DropShadow color="#999999" offsetX="2" offsetY="2" />
+                  </effect>
+               </Button>
+                  <Button fx:id="logout" onAction="#logOut" style="-fx-background-color: red; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Logout">
+                      <effect>
+                          <DropShadow color="#999999" offsetX="2" offsetY="2" />
+                      </effect>
+                  </Button>
+              </VBox>
+         </right>
+         <center>
+            <VBox prefHeight="320.0" prefWidth="386.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField id="SearchByString" fx:id="SearchByString" prefHeight="25.0" prefWidth="441.0" promptText="Search by string" />
+                    <ListView fx:id="albumsList" prefHeight="292.0" prefWidth="445.0">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </ListView>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </content>
+</TitledPane>

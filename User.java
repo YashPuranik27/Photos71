@@ -1,14 +1,19 @@
+package photoalbum;
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
-
+import java.util.stream.Collectors;
 
 public class User implements Serializable {
 
     private ArrayList<Album> albums;
 
     private String username;
+
+    private Album lookingAt = null;
 
     public ArrayList<String> albumNames = new ArrayList<String>(); // List of album names
 
@@ -20,7 +25,7 @@ public class User implements Serializable {
 
 
     static Comparator<Album> byEarliestDate = Comparator
-            .comparing(Album::getEarliestPhoto, Comparator.nullsFirst(Date::compareTo));
+            .comparing(Album::getEarliestPhoto, Comparator.nullsFirst(Calendar::compareTo));
 
 
     public ArrayList<Photo> orTagSearch(ArrayList<Tag> searchTags) {
@@ -46,7 +51,7 @@ public class User implements Serializable {
         Set<Photo> uniquePhotos = albums.stream()
                 .flatMap(album -> album.getPhotos().stream())
                 .filter(picture -> {
-                    Date testDate = picture.getDate();
+                    Calendar testDate = picture.getDate();
                     return !testDate.before(date1) && !testDate.after(date2);
                 })
                 .collect(Collectors.toSet());
@@ -58,5 +63,86 @@ public class User implements Serializable {
         return albums.stream()
                 .map(Album::getAlbumName)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public String getName(){
+        return username;
+    }
+
+    public void makeAlbum(String name){
+        albums.add(new Album(name));
+        albumNames.add(name);
+        try {Persistence.save(Photos.driver);}
+            catch (IOException e) {System.out.println(e);}
+    }
+
+    public void renameAlbum(String original, String newName) {
+        Album src = findAlbumByName(original);
+        if(src == null)
+            return;
+        src.rename(newName);
+        albumNames.remove(original);
+        albumNames.add(newName);
+        try {Persistence.save(Photos.driver);}
+            catch (IOException e) {System.out.println(e);}
+    }
+
+    public void deleteAlbum(String album){
+        Album src = findAlbumByName(album);
+
+        if(src == null)
+            return;
+
+        albumNames.remove(album);
+        albums.remove(src);
+
+        try {Persistence.save(Photos.driver);}
+            catch (IOException e) {System.out.println(e);}
+    }
+
+    public void addToAlbum(Photo in, String albumName){
+        if(in == null)
+            return;
+        Album src = findAlbumByName(albumName);
+
+        if(src == null)
+            return;
+
+        src.addPhoto(in);
+
+        try {Persistence.save(Photos.driver);}
+            catch (IOException e) {System.out.println(e);}
+    }
+
+    public Boolean doesAlbumHave(Photo in, String albumName){
+        Album src = findAlbumByName(albumName);
+
+        if(src == null)
+            return true; //If this is ever null, we'll return true which will cause an alert in AlbumController
+
+        return src.getPhotos().contains(in);
+    }
+
+    private Album findAlbumByName(String name){
+        for(Album a : albums){
+            if (a.getAlbumName() == name){
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public boolean lookAt(String albumName){
+        lookingAt = findAlbumByName(albumName);
+        return lookingAt != null;
+    }
+
+    public Album getLookAt(){
+        return lookingAt;
+    }
+
+    public User(String name){
+        username = name;
+        albums = new ArrayList<Album>();
     }
 }
