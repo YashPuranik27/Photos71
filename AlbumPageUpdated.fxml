@@ -96,15 +96,16 @@
                <children>
                   <ScrollPane prefHeight="133.0" prefWidth="246.0">
                      <content>
-                        <ListView fx:id="tagList" prefHeight="130.0" prefWidth="269.0" />
+                        <ListView fx:id="tagList" focusTraversable="false" prefHeight="130.0" prefWidth="269.0" />
                      </content>
                   </ScrollPane>
-                  <FlowPane prefHeight="33.0" prefWidth="260.0">
+                  <FlowPane prefHeight="25.0" prefWidth="97.0">
                      <children>
-                        <TextField fx:id="tagInput" prefHeight="24.0" prefWidth="85.0" promptText="Tag Name" />
-                        <TextField fx:id="valueInput" prefHeight="24.0" prefWidth="85.0" promptText="Tag Value" />
-                        <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" text="Add" />
-                        <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" text="Delete" />
+                        <Button mnemonicParsing="false" onAction="#tagEdit" prefHeight="25.0" prefWidth="271.0" text="Open Tag Editor">
+                           <FlowPane.margin>
+                              <Insets bottom="8.0" />
+                           </FlowPane.margin>
+                        </Button>
                      </children>
                   </FlowPane>
                   <FlowPane prefHeight="34.0" prefWidth="272.0">

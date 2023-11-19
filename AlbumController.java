@@ -4,20 +4,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +28,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class AlbumController implements Navigatable, LogoutController{
 
@@ -36,10 +39,6 @@ public class AlbumController implements Navigatable, LogoutController{
     Button addPhoto;
     @FXML
     Button removePhoto;
-    @FXML
-    Button addTag;
-    @FXML
-    Button deleteTag;
     @FXML
     Button copyPhoto;
     @FXML
@@ -60,11 +59,7 @@ public class AlbumController implements Navigatable, LogoutController{
     Button filterSelector;
 
     @FXML
-    TextField tagInput;
-    @FXML
     TextField captionInput;
-    @FXML
-    TextField valueInput;
 
     @FXML
     ImageView photoDisplay;
@@ -125,6 +120,24 @@ public class AlbumController implements Navigatable, LogoutController{
                 return;
             ph.setDetails(newVal);
         });
+    }
+
+    public void tagEdit(ActionEvent e){
+        try {
+            TitledPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TagEditor.fxml")));
+
+            root.setUserData(selectedPhoto);
+
+            Stage inputStage = new Stage();
+            inputStage.setScene(new Scene(root));
+            inputStage.setResizable(false);
+            inputStage.setTitle("Photo Tag Editor");
+
+            inputStage.showAndWait();
+            setSelectedPhoto(selectedPhoto);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 
     public void moveUp(ActionEvent e) throws MalformedURLException{
@@ -289,6 +302,7 @@ public class AlbumController implements Navigatable, LogoutController{
         ph.setCaption(captionInput.getText());
     }
 
+    /*
     public void addTag(ActionEvent e){
         if(selectedPhoto == null)
             return;
@@ -320,6 +334,8 @@ public class AlbumController implements Navigatable, LogoutController{
         selectedPhoto.removeTag(toDelete);
         tagList.getItems().remove(toDelete);
     }
+
+    */
 
     public void movePhoto(ActionEvent e) throws MalformedURLException{
         if(copyPhoto(null))

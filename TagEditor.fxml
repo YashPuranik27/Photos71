@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<TitledPane fx:id="titledPane" collapsible="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.TagEditorController">
+   <content>
+      <SplitPane dividerPositions="0.5" prefHeight="396.0" prefWidth="671.0">
+         <items>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <ImageView fx:id="imagePreview" fitHeight="339.0" fitWidth="329.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+               </center>
+               <bottom>
+                  <BorderPane>
+                     <left>
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveChanges" text="Save Changes" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="20.0" />
+                           </BorderPane.margin>
+                        </Button>
+                     </left>
+                     <right>
+                        <VBox prefHeight="0.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Double click a cell to edit it">
+                                 <VBox.margin>
+                                    <Insets left="32.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You must hit enter to change the value">
+                                 <VBox.margin>
+                                    <Insets right="5.0" />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                        </VBox>
+                     </right>
+                  </BorderPane>
+               </bottom>
+            </BorderPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <VBox BorderPane.alignment="CENTER">
+                     <children>
+                        <ScrollPane prefHeight="354.0" prefWidth="332.0">
+                           <content>
+                              <TableView fx:id="tagTable" editable="true" prefHeight="351.0" prefWidth="327.0" />
+                           </content>
+                        </ScrollPane>
+                        <BorderPane prefHeight="33.0" prefWidth="332.0">
+                           <center>
+                              <Button mnemonicParsing="false" onAction="#clearSelectedRow" text="Clear Row (Delete Tag)" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets top="6.0" />
+                                 </BorderPane.margin>
+                              </Button>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+         </items>
+      </SplitPane>
+   </content>
+</TitledPane>

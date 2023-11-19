@@ -71,6 +71,7 @@ public class Photo implements Serializable {
             catch (IOException e) {System.out.println(e);}
     }
 
+
     public void addTag(String name, String value){
         for(Tag t : tags){
             if(t.tagName() == name)
@@ -82,13 +83,15 @@ public class Photo implements Serializable {
             catch (IOException e) {System.out.println(e);}
     }
 
-    public void removeTag(Tag in){
-        if(!tags.contains(in))
-            return;
+    public void clearTags(){
+        tags.clear();
+    }
 
-        tags.remove(in);
+
+    public void setTags(ArrayList<Tag> in){
+        tags = (ArrayList<Tag>) in.clone();
         try {Persistence.save(Photos.driver);}
-        catch (IOException e) {System.out.println(e);}
+            catch (IOException e) {System.out.println(e);}
     }
 
     public Photo(File fileIn){
