@@ -4,10 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -115,8 +120,9 @@ public class NonAdminController implements LogoutController, Navigatable{
         refreshList();
     }
 
-    public void search(ActionEvent e){
-
+    public void search(ActionEvent e) throws IOException{
+        popupAndWait("SearchPage.fxml",e,"*","Photo Search");
+        switchScene("NonAdminPage.fxml",e);
     }
 
     public void deleteAlbum(ActionEvent e){

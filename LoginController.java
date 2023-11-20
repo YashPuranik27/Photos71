@@ -47,7 +47,7 @@ public class LoginController implements Navigatable{
         alert.showAndWait();
     }
 
-    private void addToUserData(){
-
+    public void initialize(){
+        Photos.driver.setCurrentUser(null);
     }
 }

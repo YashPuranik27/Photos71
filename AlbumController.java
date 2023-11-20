@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -60,6 +61,10 @@ public class AlbumController implements Navigatable, LogoutController{
 
     @FXML
     TextField captionInput;
+    @FXML
+    TextField tag1;
+    @FXML
+    TextField tag1val;
 
     @FXML
     ImageView photoDisplay;
@@ -84,6 +89,7 @@ public class AlbumController implements Navigatable, LogoutController{
     public AlbumController(){
         chooser.setTitle("Choose image file");
         chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.bmp", "*.gif", "*.jpg", "*.png"),
                 new FileChooser.ExtensionFilter("BMP", "*.bmp"),
                 new FileChooser.ExtensionFilter("GIF", "*.gif"),
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"),
@@ -102,11 +108,7 @@ public class AlbumController implements Navigatable, LogoutController{
 
             setSelectedPhoto((Photo) newVal.getUserData());
         });
-        /*for (int i = 0; i < 3; i++) {
-            ColumnConstraints colConstraints = new ColumnConstraints();
-            colConstraints.setPercentWidth(100.0 / 3);
-            imageGrid.getColumnConstraints().add(colConstraints);
-        }*/
+
         reloadPhotos();
 
         if(imageListview.getItems().size() != 0)
@@ -122,22 +124,21 @@ public class AlbumController implements Navigatable, LogoutController{
         });
     }
 
-    public void tagEdit(ActionEvent e){
-        try {
-            TitledPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TagEditor.fxml")));
-
-            root.setUserData(selectedPhoto);
-
-            Stage inputStage = new Stage();
-            inputStage.setScene(new Scene(root));
-            inputStage.setResizable(false);
-            inputStage.setTitle("Photo Tag Editor");
-
-            inputStage.showAndWait();
-            setSelectedPhoto(selectedPhoto);
-        } catch (Exception ex) {
-            System.out.println(ex);
+    public void addTag(ActionEvent e){
+        if(tag1.getText().equals("") || tag1val.getText().equals("")){
+            showAlert("Invalid Input - ERROR", "Either the new tag's key or value is empty", Alert.AlertType.ERROR);
+            return;
         }
+        selectedPhoto.addTag(tag1.getText(), tag1val.getText());
+    }
+
+    public void removeTag(ActionEvent e){
+        if(tagList.getSelectionModel().getSelectedItem() == null){
+            showAlert("Invalid Selection - ERROR", "There is no tag selected in the list", Alert.AlertType.ERROR);
+            return;
+        }
+        String tag[] = tagList.getSelectionModel().getSelectedItem().getText().split(" : ");
+        selectedPhoto.removeTag(new Tag(tag[0], tag[1]));
     }
 
     public void moveUp(ActionEvent e) throws MalformedURLException{
@@ -179,8 +180,8 @@ public class AlbumController implements Navigatable, LogoutController{
 
         imageListview.getSelectionModel().select(ind+1);
 
-        try {Persistence.save(Photos.driver);}
-            catch (IOException ex) {}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException ex) {}
     }
 
     private void setSelectedPhoto(Photo newPhoto) {
@@ -302,41 +303,6 @@ public class AlbumController implements Navigatable, LogoutController{
         ph.setCaption(captionInput.getText());
     }
 
-    /*
-    public void addTag(ActionEvent e){
-        if(selectedPhoto == null)
-            return;
-        if(tagInput.getText().equals("") || valueInput.getText().equals("")){
-            showAlert("Invalid Input - ERROR", "Either Tag Name or Tag Value is missing", Alert.AlertType.ERROR);
-            return;
-        }
-
-        Photo ph = (Photo) imageListview.getSelectionModel().getSelectedItem().getUserData();
-        ph.addTag(tagInput.getText(), valueInput.getText());
-        Text temp = new Text();
-        temp.setText(tagInput.getText() + " : " + valueInput.getText());
-        tagList.getItems().add(temp);
-    }
-
-    public void deleteTag(ActionEvent e){
-        if(selectedPhoto == null)
-            return;
-        if(tagList.getSelectionModel().getSelectedItems().size() == 0){
-            showAlert("Invalid Selection - ERROR", "No tag is selected", Alert.AlertType.ERROR);
-            return;
-        }
-        String key = tagList.getSelectionModel().getSelectedItem().getText().split(":")[0];
-        key = key.substring(0, key.length() - 1);
-        String val = tagList.getSelectionModel().getSelectedItem().getText().split(":")[1];
-        val = val.substring(1);
-        Tag toDelete = new Tag(key, val);
-
-        selectedPhoto.removeTag(toDelete);
-        tagList.getItems().remove(toDelete);
-    }
-
-    */
-
     public void movePhoto(ActionEvent e) throws MalformedURLException{
         if(copyPhoto(null))
             removePhoto(null);
@@ -403,7 +369,7 @@ public class AlbumController implements Navigatable, LogoutController{
     }
 
     public void search(ActionEvent e)  {
-
+        popupAndWait("SearchPage.fxml",e,beingDisplayed.getAlbumName(),"Photo Search");
     }
 
     public void goBack(ActionEvent e) throws IOException{

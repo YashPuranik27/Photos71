@@ -48,7 +48,7 @@ public class AdminController implements LogoutController {
         }
 
         Photos.driver.admin.addUser(userInput);
-        Persistence.save(Photos.driver); // Save the changes to info.dat through Persistence.java
+        //Persistence.save(Photos.driver); // Save the changes to info.dat through Persistence.java
         refresh();
         UserList.getSelectionModel().select(userInput);
         Enteruser.clear();
@@ -75,7 +75,7 @@ public class AdminController implements LogoutController {
         if (result == ButtonType.OK) {
             Photos.driver.admin.deleteUser(selectedItem);
             refresh();
-            Persistence.save(Photos.driver);
+            //Persistence.save(Photos.driver);
 
             // this is to adjust the selection in the list
             int usersSize = Photos.driver.admin.getUsers().size();

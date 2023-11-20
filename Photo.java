@@ -9,10 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class Photo implements Serializable {
 
@@ -43,8 +40,8 @@ public class Photo implements Serializable {
         dateModified.set(Calendar.MILLISECOND, 0);
         dateModified.setTimeInMillis(file.lastModified());
         caption = capIn;
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
     }
 
     public File getFilepath(){
@@ -57,8 +54,8 @@ public class Photo implements Serializable {
 
     public void setCaption(String capIn){
         caption = capIn;
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
     }
 
     public String getDetails(){
@@ -67,8 +64,8 @@ public class Photo implements Serializable {
 
     public void setDetails(String in){
         details = in;
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
     }
 
 
@@ -79,19 +76,19 @@ public class Photo implements Serializable {
         }
 
         tags.add(new Tag(name, value));
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
+    }
+
+    public void removeTag(Tag in){
+        tags.remove(in);
+        //try {Persistence.save(Photos.driver);}
+        //   catch (IOException e) {System.out.println(e);}
     }
 
     public void clearTags(){
         tags.clear();
-    }
-
-
-    public void setTags(ArrayList<Tag> in){
-        tags = (ArrayList<Tag>) in.clone();
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
     }
 
     public Photo(File fileIn){

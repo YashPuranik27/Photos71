@@ -1,7 +1,5 @@
 package photoalbum;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
@@ -28,8 +26,17 @@ public class User implements Serializable {
             .comparing(Album::getEarliestPhoto, Comparator.nullsFirst(Calendar::compareTo));
 
 
-    public ArrayList<Photo> orTagSearch(ArrayList<Tag> searchTags) {
-        return albums.stream()
+    public ArrayList<Photo> orTagSearch(ArrayList<Tag> searchTags, String albumName) {
+        Album searched = findAlbumByName(albumName);
+        ArrayList<Album> albumSet;
+        if(searched == null){
+            albumSet = albums;
+        }else {
+            albumSet = new ArrayList<>();
+            albumSet.add(searched);
+        }
+
+        return albumSet.stream()
                 .flatMap(a -> a.getPhotos().stream())
                 .distinct()
                 .filter(picture -> picture.getTags().stream()
@@ -40,15 +47,34 @@ public class User implements Serializable {
     }
 
 
-    public ArrayList<Photo> andTagSearch(ArrayList<Tag> searchTags) {
-        return albums.stream()
+    public ArrayList<Photo> andTagSearch(ArrayList<Tag> searchTags, String albumName) {
+        Album searched = findAlbumByName(albumName);
+        ArrayList<Album> albumSet;
+        if(searched == null){
+            albumSet = albums;
+        }else {
+            albumSet = new ArrayList<>();
+            albumSet.add(searched);
+        }
+
+        return albumSet.stream()
                 .flatMap(album -> album.getPhotos().stream())
                 .filter(picture -> searchTags.stream().allMatch(picture::hasTag))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public ArrayList<Photo> getPhotosInRange(Date date1, Date date2) {
-        Set<Photo> uniquePhotos = albums.stream()
+    public ArrayList<Photo> getPhotosInRange(Date date1, Date date2, String albumName) {
+
+        Album searched = findAlbumByName(albumName);
+        ArrayList<Album> albumSet;
+        if(searched == null){
+            albumSet = albums;
+        }else {
+            albumSet = new ArrayList<>();
+            albumSet.add(searched);
+        }
+
+        Set<Photo> uniquePhotos = albumSet.stream()
                 .flatMap(album -> album.getPhotos().stream())
                 .filter(picture -> {
                     Calendar testDate = picture.getDate();
@@ -69,11 +95,14 @@ public class User implements Serializable {
         return username;
     }
 
-    public void makeAlbum(String name){
-        albums.add(new Album(name));
+    public Album makeAlbum(String name){
+        Album temp = new Album(name);
+        albums.add(temp);
         albumNames.add(name);
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
+
+        return temp;
     }
 
     public void renameAlbum(String original, String newName) {
@@ -83,8 +112,8 @@ public class User implements Serializable {
         src.rename(newName);
         albumNames.remove(original);
         albumNames.add(newName);
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //   catch (IOException e) {System.out.println(e);}
     }
 
     public void deleteAlbum(String album){
@@ -96,8 +125,8 @@ public class User implements Serializable {
         albumNames.remove(album);
         albums.remove(src);
 
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
     }
 
     public void addToAlbum(Photo in, String albumName){
@@ -110,8 +139,8 @@ public class User implements Serializable {
 
         src.addPhoto(in);
 
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
     }
 
     public Boolean doesAlbumHave(Photo in, String albumName){

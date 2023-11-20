@@ -6,9 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public interface Navigatable {
 
@@ -24,6 +26,23 @@ public interface Navigatable {
 
         if (loader.getController() instanceof Initializable) {
             ((Initializable) loader.getController()).initialize(null, null);
+        }
+    }
+
+    default void popupAndWait(String fxmlPath, ActionEvent input, Object userData, String title) {
+        try {
+            TitledPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("")));
+
+            root.setUserData(userData);
+
+            Stage inputStage = new Stage();
+            inputStage.setScene(new Scene(root));
+            inputStage.setResizable(false);
+            inputStage.setTitle(title);
+
+            inputStage.showAndWait();
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
     }
 }

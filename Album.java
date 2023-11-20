@@ -41,13 +41,13 @@ public class Album implements Serializable {
 
     public void addPhoto(Photo in){
         photos.add(in);
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
     }
 
     public void removePhoto(Photo in){
         photos.remove(in);
-        try {Persistence.save(Photos.driver);}
-            catch (IOException e) {System.out.println(e);}
+        //try {Persistence.save(Photos.driver);}
+        //    catch (IOException e) {System.out.println(e);}
     }
 }

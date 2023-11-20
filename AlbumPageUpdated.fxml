@@ -14,11 +14,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TitledPane fx:id="titledPane" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="922.0" text="untitled" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.AlbumController">
+<TitledPane fx:id="titledPane" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="922.0" style="-fx-alignment: CENTER;" text="untitled" textAlignment="CENTER" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.AlbumController">
    <content>
-      <GridPane>
+      <GridPane prefHeight="400.0" prefWidth="922.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="281.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="285.0" />
@@ -43,20 +44,24 @@
                   <Button fx:id="addPhoto" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo">
                      <FlowPane.margin>
                         <Insets right="10.0" />
-                     </FlowPane.margin></Button>
+                     </FlowPane.margin>
+                  </Button>
                   <Button fx:id="removePhoto" mnemonicParsing="false" onAction="#removePhoto" text="Remove" />
                   <Button fx:id="movePhoto" mnemonicParsing="false" onAction="#movePhoto" text="Move">
                      <FlowPane.margin>
                         <Insets left="20.0" />
-                     </FlowPane.margin></Button>
+                     </FlowPane.margin>
+                  </Button>
                   <Button fx:id="copyPhoto" mnemonicParsing="false" onAction="#copyPhoto" text="Copy">
                      <FlowPane.margin>
                         <Insets left="10.0" />
-                     </FlowPane.margin></Button>
+                     </FlowPane.margin>
+                  </Button>
                   <Button fx:id="filterSelector" mnemonicParsing="false" onAction="#search" prefHeight="25.0" prefWidth="187.0" text="Search Photos in Album">
                      <FlowPane.margin>
                         <Insets top="10.0" />
-                     </FlowPane.margin></Button>
+                     </FlowPane.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#moveUp" text="^">
                      <FlowPane.margin>
                         <Insets left="20.0" top="10.0" />
@@ -101,9 +106,24 @@
                   </ScrollPane>
                   <FlowPane prefHeight="25.0" prefWidth="97.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#tagEdit" prefHeight="25.0" prefWidth="271.0" text="Open Tag Editor">
+                        <TextField fx:id="tag1" prefHeight="25.0" prefWidth="70.0" promptText="Tag Name">
                            <FlowPane.margin>
-                              <Insets bottom="8.0" />
+                              <Insets bottom="8.0" top="8.0" />
+                           </FlowPane.margin>
+                        </TextField>
+                        <TextField fx:id="tag1val" prefHeight="25.0" prefWidth="75.0" promptText="Tag Value">
+                           <FlowPane.margin>
+                              <Insets left="5.0" />
+                           </FlowPane.margin>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#addTag" text="Add">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#removeTag" text="Remove">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
                            </FlowPane.margin>
                         </Button>
                      </children>
@@ -146,4 +166,7 @@
          </children>
       </GridPane>
    </content>
+   <font>
+      <Font name="System Bold" size="12.0" />
+   </font>
 </TitledPane>
