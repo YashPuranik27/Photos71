@@ -49,7 +49,17 @@ public class Persistence implements Serializable { // default constructor
      * @return The photo object that is associated with the filepath, from the filepathsUsed map or null if there isn't one.
      */
     public Photo hasFilepath(String fpIn){
-        return filepathsUsed.get(fpIn);
+        if(fpIn.contains("data\\stock\\")){
+            //This is a stock photo
+            int ind = fpIn.indexOf("data\\stock\\");
+            return filepathsUsed.get(fpIn.substring(ind));
+        }else if(fpIn.contains("data/stock/")){
+            //This is a stock photo
+            int ind = fpIn.indexOf("data/stock/");
+            return filepathsUsed.get(fpIn.substring(ind));
+        }else{
+            return filepathsUsed.get(fpIn);
+        }
     }
 
     /**

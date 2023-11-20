@@ -62,8 +62,6 @@ public class AlbumController implements Navigatable, LogoutController{
     @FXML
     Button backButton;
     @FXML
-    Button displayImage;
-    @FXML
     Button filterSelector;
 
     @FXML
@@ -237,6 +235,7 @@ public class AlbumController implements Navigatable, LogoutController{
     private void setSelectedPhoto(Photo newPhoto) {
         try {
             if(newPhoto == null){
+                selectedPhoto = null;
                 //I really don't know why I had to go through this filepath conversion
                 //nonsense to give image a path it likes.
                 File blankImg = new File("data/gui/blank.jpg");
@@ -246,7 +245,6 @@ public class AlbumController implements Navigatable, LogoutController{
                 captionInput.setText("");
                 tagList.setItems(null);
                 detailTextArea.setText("");
-                selectedPhoto = null;
                 return;
             }
 
@@ -411,16 +409,18 @@ public class AlbumController implements Navigatable, LogoutController{
     public Boolean copyPhoto(ActionEvent e){
         if(selectedPhoto == null)
             return false;
+
+        System.out.println(Photos.driver.getCurrentUser().getAlbumNameList());
         ArrayList<String> userAlbums = (ArrayList<String>) Photos.driver.getCurrentUser().getAlbumNameList().clone();
         userAlbums.remove(beingDisplayed.getAlbumName());
-
-        ChoiceDialog d = new ChoiceDialog(userAlbums.get(0), userAlbums);
-        d.setHeaderText("Which album is this photo being moved/copied to?");
 
         if(userAlbums.size() < 1){
             showAlert("Invalid List - ERROR", "You do not have enough albums to move or copy this photo", Alert.AlertType.ERROR);
             return false;
         }
+
+        ChoiceDialog d = new ChoiceDialog(userAlbums.get(0), userAlbums);
+        d.setHeaderText("Which album is this photo being moved/copied to?");
 
         Optional<String> chosen = d.showAndWait();
 
@@ -500,17 +500,42 @@ public class AlbumController implements Navigatable, LogoutController{
         switchScene("/Photos71/src/gui/fxml/NonAdminPage.fxml", e.getSource());
     }
     /**
-     * Opens the selected photo using the default system application.
+     * Adds the input tag's key to a user-specific list of preset keys to quickly add later.
      *
      * @param e The event that triggered the action.
-     * @throws IOException if an error occurs while opening the file.
      */
-    public void displayPhoto(ActionEvent e) throws IOException {
-        if(selectedPhoto == null)
+    public void addKeyToPreset(ActionEvent e){
+        if(tag1 == null || tag1.equals("")){
+            showAlert("Invalid Input - ERROR", "There is no text in the Tag Key text field", Alert.AlertType.ERROR);
             return;
-        Desktop desktop = Desktop.getDesktop();
-        desktop.open(selectedPhoto.getFilepath());
+        }
+
+        Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Add key " + tag1.getText() + " to Preset Keys List?", ButtonType.YES, ButtonType.CANCEL)
+                .showAndWait();
+        if (confirm.isPresent() && confirm.get() == ButtonType.YES) {
+            Photos.driver.getCurrentUser().presetKeyList.add(tag1.getText());
+            System.out.println(Photos.driver.getCurrentUser().presetKeyList);
+        }
     }
+    /**
+     * Prompts the user with a Choice Dialog to determine which of their preset keys they would like to add to
+     * the currently selected photo's key input.
+     *
+     * @param e The event that triggered the action.
+     */
+    public void addKeyFromPreset(ActionEvent e){
+        ChoiceDialog d = new ChoiceDialog(Photos.driver.getCurrentUser().presetKeyList.get(0), Photos.driver.getCurrentUser().presetKeyList);
+        d.setHeaderText("Which predefined key would you like to add to this photo?");
+
+        Optional<String> chosen = d.showAndWait();
+
+        if(!chosen.isPresent()){
+            return;
+        }
+
+        tag1.setText(chosen.get());
+    }
+
     /**
      * Displays an alert dialog with the specified title and content.
      *

@@ -119,7 +119,7 @@ public class Admin implements Serializable {
                     continue;
 
                 Photo newPhoto = new Photo(file);
-                Photos.driver.addFilepath(file.getAbsoluteFile().toString(), newPhoto);
+                Photos.driver.addFilepath(file.toString(), newPhoto);
                 stockAlbum.addPhoto(newPhoto);
             }
         }

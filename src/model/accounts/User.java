@@ -26,17 +26,11 @@ public class User implements Serializable {
 
     private Album lookingAt = null; // The currently viewed album
 
+    public ArrayList<String> presetKeyList = new ArrayList<>(); //A list of all preset keys the user and system have defined
+
     public ArrayList<String> albumNames = new ArrayList<String>(); // // List of album names for easy access
 
     public static final long serialVersionUID = 1L; // Serialization identifier
-    public static final String storeDir = "info"; // Directory for storing user information
-    public static final String storeFile = "info.dat"; // Data file for storing user information
-
-    static Comparator<Album> alphabetical = (arg0, arg1) -> arg0.getAlbumName().compareTo(arg1.getAlbumName());
-
-
-    static Comparator<Album> byEarliestDate = Comparator
-            .comparing(Album::getEarliestPhoto, Comparator.nullsFirst(Calendar::compareTo));
 
     /**
      * Searches for photos across albums that match any of the given tags.
@@ -267,5 +261,10 @@ public class User implements Serializable {
     public User(String name){
         username = name;
         albums = new ArrayList<Album>();
+        presetKeyList.add("Location");
+        presetKeyList.add("Person");
+        presetKeyList.add("Camera");
+        presetKeyList.add("Shape");
+        presetKeyList.add("Color");
     }
 }
