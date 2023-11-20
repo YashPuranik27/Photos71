@@ -15,12 +15,12 @@ import java.util.Objects;
 public interface Navigatable {
 
     //This is Yash's code, I moved it here for reusability - Joe
-    default void switchScene(String fxmlPath, ActionEvent input) throws IOException {
+    default void switchScene(String fxmlPath, Object source) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxmlPath));
         Parent sceneManager = loader.load();
         Scene newScene = new Scene(sceneManager);
-        Stage primaryStage = (Stage) ((Node) input.getSource()).getScene().getWindow();
+        Stage primaryStage = (Stage) ((Node) source).getScene().getWindow();
         primaryStage.setScene(newScene);
         primaryStage.show();
 
