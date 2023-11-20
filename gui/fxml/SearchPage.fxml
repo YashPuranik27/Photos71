@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<TitledPane fx:id="titledPane" collapsible="false" style="-fx-alignment: CENTER;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.SearchController">
+<TitledPane fx:id="titledPane" collapsible="false" style="-fx-alignment: CENTER;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.gui.controller.SearchController">
    <content>
       <AnchorPane fx:id="anchorPane" prefHeight="390.0" prefWidth="600.0" style="-fx-background-color: #f0f0f0;">
           <Label layoutX="147.0" layoutY="34.0" style="-fx-font-weight: bold; -fx-text-fill: #333;" text="Search by Tags" />
@@ -33,7 +32,7 @@
           <TextField fx:id="endDateInput" layoutX="211.0" layoutY="246.0" prefHeight="24.0" prefWidth="59.0" promptText="to" />
          <Label layoutX="10.0" layoutY="145.0" style="-fx-font-weight: bold; -fx-text-fill: #333;" text="AND" />
          <Label layoutX="92.0" layoutY="145.0" style="-fx-font-weight: bold; -fx-text-fill: #333;" text="OR" />
-         <Button fx:id="tagSwitch" layoutX="42.0" layoutY="140.0" mnemonicParsing="false" onAction="#tagSwitch" prefHeight="27.0" prefWidth="45.0" style="-fx-alignment: CENTER-LEFT;" text="    ⬤">
+         <Button fx:id="tagSwitch" layoutX="42.0" layoutY="140.0" mnemonicParsing="false" onAction="#tagSwitch" prefHeight="27.0" prefWidth="45.0" style="-fx-alignment: CENTER-LEFT; -fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="    ⬤">
             <font>
                <Font size="13.0" />
             </font>

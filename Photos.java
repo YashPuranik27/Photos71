@@ -9,13 +9,12 @@ import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import photoalbum.model.data.Persistence;
 
 
 public class Photos extends Application {
@@ -25,7 +24,7 @@ public class Photos extends Application {
     @Override
     public void start(Stage initialStage) {
         try {
-            StackPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginPage.fxml")));
+            StackPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gui/fxml/LoginPage.fxml")));
 
             initialStage.setScene(new Scene(root));
             initialStage.setResizable(false);

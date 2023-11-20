@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<StackPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.LoginController">
+<StackPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.gui.controller.LoginController">
     <VBox alignment="CENTER" spacing="20">
         <Text style="-fx-font-size: 47px; -fx-font-weight: bold; -fx-fill: #333;" text="Photos" />
         <TextField fx:id="nameInput" maxWidth="200" onKeyPressed="#keyPress" promptText="Username" />

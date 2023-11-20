@@ -1,4 +1,4 @@
-package photoalbum;
+package photoalbum.model.data;
 
 import java.io.Serial;
 import java.io.Serializable;

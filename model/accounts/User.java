@@ -1,6 +1,9 @@
-package photoalbum;
+package photoalbum.model.accounts;
 
-import java.io.IOException;
+import photoalbum.model.data.Album;
+import photoalbum.model.data.Photo;
+import photoalbum.model.data.Tag;
+
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;

@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<TitledPane fx:id="titledPane" animated="false" collapsible="false" style="-fx-alignment: CENTER;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.NonAdminController">
+<TitledPane fx:id="titledPane" animated="false" collapsible="false" style="-fx-alignment: CENTER;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoalbum.gui.controller.NonAdminController">
    <content>
       <BorderPane prefHeight="370.0" prefWidth="669.0" style="-fx-background-color: #f0f0f0;">
           <bottom>
@@ -20,6 +19,9 @@
                   <effect>
                       <DropShadow color="#999999" offsetX="1" offsetY="1" />
                   </effect>
+               <padding>
+                  <Insets right="300.0" />
+               </padding>
               </Label>
           </bottom>
          <right>

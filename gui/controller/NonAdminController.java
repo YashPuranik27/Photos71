@@ -1,18 +1,13 @@
-package photoalbum;
+package photoalbum.gui.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import photoalbum.Photos;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -50,6 +45,8 @@ public class NonAdminController implements LogoutController, Navigatable{
         SearchByString.textProperty().addListener((observable, old, newVal) -> {
             search(newVal);
         });
+
+        Photos.driver.getCurrentUser().lookAt("*");
     }
 
     public void refreshList(){
@@ -66,7 +63,7 @@ public class NonAdminController implements LogoutController, Navigatable{
         if (!Photos.driver.getCurrentUser().lookAt((String) albumsList.getSelectionModel().getSelectedItem()))
             return;
 
-        switchScene("/photoalbum/AlbumPageUpdated.fxml", e);
+        switchScene("/photoalbum/gui/fxml/AlbumPageUpdated.fxml", e.getSource());
     }
 
     public void createAlbum(ActionEvent e) {
@@ -121,8 +118,8 @@ public class NonAdminController implements LogoutController, Navigatable{
     }
 
     public void search(ActionEvent e) throws IOException{
-        popupAndWait("SearchPage.fxml",e,"*","Photo Search");
-        switchScene("NonAdminPage.fxml",e);
+        popupAndWait("/photoalbum/gui/fxml/SearchPage.fxml", "*","Photo Search");
+        switchScene("/photoalbum/gui/fxml/NonAdminPage.fxml",e.getSource());
     }
 
     public void deleteAlbum(ActionEvent e){

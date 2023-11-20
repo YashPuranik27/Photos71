@@ -1,4 +1,4 @@
-package photoalbum;
+package photoalbum.gui.controller;
 
 
 import javafx.collections.FXCollections;
@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import photoalbum.Photos;
 
 import java.io.IOException;
 

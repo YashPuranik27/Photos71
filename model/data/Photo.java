@@ -1,14 +1,7 @@
-package photoalbum;
-
-import javafx.scene.image.Image;
+package photoalbum.model.data;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Photo implements Serializable {

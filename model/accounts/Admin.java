@@ -1,4 +1,4 @@
-package photoalbum;
+package photoalbum.model.accounts;
 
 import java.io.Serializable;
 import java.util.ArrayList;

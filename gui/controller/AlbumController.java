@@ -1,37 +1,33 @@
-package photoalbum;
+package photoalbum.gui.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import photoalbum.*;
+import photoalbum.model.data.Album;
+import photoalbum.model.data.Persistence;
+import photoalbum.model.data.Photo;
+import photoalbum.model.data.Tag;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.logging.Level;
 
 public class AlbumController implements Navigatable, LogoutController{
 
@@ -129,7 +125,16 @@ public class AlbumController implements Navigatable, LogoutController{
             showAlert("Invalid Input - ERROR", "Either the new tag's key or value is empty", Alert.AlertType.ERROR);
             return;
         }
+
+        if(selectedPhoto.hasTag(new Tag(tag1.getText(), tag1val.getText()))){
+            showAlert("Invalid Input - ERROR", "This key-value pair already exists for this photo", Alert.AlertType.ERROR);
+            return;
+        }
+
         selectedPhoto.addTag(tag1.getText(), tag1val.getText());
+        Text text = new Text();
+        text.setText(tag1.getText() + " : " + tag1val.getText());
+        tagList.getItems().add(text);
     }
 
     public void removeTag(ActionEvent e){
@@ -139,6 +144,8 @@ public class AlbumController implements Navigatable, LogoutController{
         }
         String tag[] = tagList.getSelectionModel().getSelectedItem().getText().split(" : ");
         selectedPhoto.removeTag(new Tag(tag[0], tag[1]));
+        tagList.getItems().remove(tagList.getSelectionModel().getSelectedItem().getText());
+        reloadTags();
     }
 
     public void moveUp(ActionEvent e) throws MalformedURLException{
@@ -158,7 +165,8 @@ public class AlbumController implements Navigatable, LogoutController{
         reloadPhotos();
 
         imageListview.getSelectionModel().select(ind-1);
-        try {Persistence.save(Photos.driver);}
+        try {
+            Persistence.save(Photos.driver);}
             catch (IOException ex) {}
     }
 
@@ -202,20 +210,24 @@ public class AlbumController implements Navigatable, LogoutController{
 
             photoDisplay.setImage(new Image(newPhoto.getFilepath().toURI().toURL().toExternalForm()));
             captionInput.setText(newPhoto.getCaption());
-            ArrayList<Tag> tags = newPhoto.getTags();
-            ObservableList<Text> tagsObs = FXCollections.observableArrayList();
-            if(!tags.isEmpty()){
-                for(Tag t: tags){
-                    Text temp = new Text();
-                    temp.setText(t.tagName() + " : " + t.tagValue());
-                    tagsObs.add(temp);
-                }
-            }
-            tagList.setItems(tagsObs);
             detailTextArea.setText(newPhoto.getDetails());
             selectedPhoto = newPhoto;
+            reloadTags();
         }catch(Exception ex){
         }
+    }
+
+    private void reloadTags(){
+        ArrayList<Tag> tags = selectedPhoto.getTags();
+        ObservableList<Text> tagsObs = FXCollections.observableArrayList();
+        if(!tags.isEmpty()){
+            for(Tag t: tags){
+                Text temp = new Text();
+                temp.setText(t.tagName() + " : " + t.tagValue());
+                tagsObs.add(temp);
+            }
+        }
+        tagList.setItems(tagsObs);
     }
 
     public void addPhoto(ActionEvent e) throws  IOException, MalformedURLException{
@@ -369,12 +381,12 @@ public class AlbumController implements Navigatable, LogoutController{
     }
 
     public void search(ActionEvent e)  {
-        popupAndWait("SearchPage.fxml",e,beingDisplayed.getAlbumName(),"Photo Search");
+        popupAndWait("/photoalbum/gui/fxml/SearchPage.fxml", beingDisplayed.getAlbumName(),"Photo Search");
     }
 
     public void goBack(ActionEvent e) throws IOException{
         Photos.driver.getCurrentUser().lookAt("");
-        switchScene("/photoalbum/NonAdminPage.fxml", e);
+        switchScene("/photoalbum/gui/fxml/NonAdminPage.fxml", e.getSource());
     }
 
     public void displayPhoto(ActionEvent e) throws IOException {

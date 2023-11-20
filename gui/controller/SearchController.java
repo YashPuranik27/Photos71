@@ -1,19 +1,20 @@
-package photoalbum;
+package photoalbum.gui.controller;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.util.converter.DefaultStringConverter;
+import photoalbum.model.data.Album;
+import photoalbum.model.data.Photo;
+import photoalbum.Photos;
+import photoalbum.model.data.Tag;
 
 import java.net.MalformedURLException;
 import java.text.ParseException;
@@ -129,9 +130,10 @@ public class SearchController {
 
     public void initialize(){
         Platform.runLater(() -> {
-            searchedAlbum = (String) anchorPane.getUserData();
-            if(!Photos.driver.getCurrentUser().getAlbumNameList().contains(searchedAlbum) && !searchedAlbum.equals("*"))
+            if(Photos.driver.getCurrentUser().getLookAt() == null)
                 searchedAlbum = "*";
+            else
+                searchedAlbum = Photos.driver.getCurrentUser().getLookAt().getAlbumName();
             titledPane.setText("Searching " + Photos.driver.getCurrentUser().getName() +"'s photos" + (searchedAlbum.equals("*") ? "" : " from album: " + searchedAlbum));
         });
     }

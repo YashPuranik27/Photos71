@@ -1,15 +1,9 @@
-package photoalbum;
+package photoalbum.model.data;
 
-import javafx.scene.image.Image;
-import javafx.util.Pair;
-
-import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
 
 public class Album implements Serializable {
 

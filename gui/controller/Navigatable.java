@@ -1,6 +1,5 @@
-package photoalbum;
+package photoalbum.gui.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -29,9 +28,9 @@ public interface Navigatable {
         }
     }
 
-    default void popupAndWait(String fxmlPath, ActionEvent input, Object userData, String title) {
+    default void popupAndWait(String fxmlPath, Object userData, String title) {
         try {
-            TitledPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("")));
+            TitledPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
 
             root.setUserData(userData);
 

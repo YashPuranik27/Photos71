@@ -1,4 +1,8 @@
-package photoalbum;
+package photoalbum.model.data;
+
+import photoalbum.Photos;
+import photoalbum.model.accounts.Admin;
+import photoalbum.model.accounts.User;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -6,10 +10,10 @@ import java.util.ArrayList;
 public class Persistence implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    public static final String STORE_DIR = "info";
+    public static final String STORE_DIR = "data/savedData";
     public static final String STORE_FILE = "info.dat";
 
-    Admin admin = new Admin();
+    public Admin admin = new Admin();
     private boolean loggedIn;
     private User currentUser;
     private Album currentAlbum;

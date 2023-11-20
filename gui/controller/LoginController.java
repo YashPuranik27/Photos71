@@ -1,21 +1,19 @@
 // done
-package photoalbum;
+package photoalbum.gui.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 import java.io.IOException;
-import javafx.fxml.FXMLLoader;
+
+import photoalbum.Photos;
+import photoalbum.model.accounts.User;
 
 public class LoginController implements Navigatable{
 
@@ -42,9 +40,10 @@ public class LoginController implements Navigatable{
         }
 
         if (username.equals("admin")) {
-            switchScene("/photoalbum/AdminPage.fxml", source);
+            Photos.driver.setCurrentUser(new User("admin"));
+            switchScene("/photoalbum/gui/fxml/AdminPage.fxml", source);
         } else if (Photos.driver.checkUser(username)) {
-            switchScene("/photoalbum/NonAdminPage.fxml", source);
+            switchScene("/photoalbum/gui/fxml/NonAdminPage.fxml", source);
         } else {
             showAlert("Invalid Input - ERROR", "The entered username is invalid!", AlertType.ERROR);
         }
