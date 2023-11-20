@@ -5,6 +5,7 @@ import photoalbum.model.data.Photo;
 import photoalbum.model.data.Tag;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,8 +67,7 @@ public class User implements Serializable {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public ArrayList<Photo> getPhotosInRange(Date date1, Date date2, String albumName) {
-
+    public ArrayList<Photo> getPhotosInRange(Calendar date1, Calendar date2, String albumName) {
         Album searched = findAlbumByName(albumName);
         ArrayList<Album> albumSet;
         if(searched == null){
@@ -162,6 +162,12 @@ public class User implements Serializable {
             }
         }
         return null;
+    }
+
+    public Album getAlbum(String name){
+        if(albumNames.indexOf(name) == -1)
+            return null;
+        return albums.get(albumNames.indexOf(name));
     }
 
     public boolean lookAt(String albumName){

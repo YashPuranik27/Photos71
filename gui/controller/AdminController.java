@@ -48,7 +48,12 @@ public class AdminController implements LogoutController {
             return;
         }
 
+
         Photos.driver.admin.addUser(userInput);
+
+        if(userInput.equals("stock")){
+            Photos.driver.admin.regenerateStock();
+        }
         //Persistence.save(Photos.driver); // Save the changes to info.dat through Persistence.java
         refresh();
         UserList.getSelectionModel().select(userInput);

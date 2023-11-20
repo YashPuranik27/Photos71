@@ -94,9 +94,9 @@ public class SearchController {
         resultPhotos.clear();
         ArrayList<Tag> searchTags = new ArrayList<>();
         if(!tag1.getText().equals(""))
-            searchTags.add(new Tag(tag1.getText(), tag1val.getText()));
+            searchTags.add(new Tag(tag1.getText().toLowerCase(), tag1val.getText().toLowerCase()));
         if(!tag2.getText().equals(""))
-            searchTags.add(new Tag(tag2.getText(), tag2val.getText()));
+            searchTags.add(new Tag(tag2.getText().toLowerCase(), tag2val.getText().toLowerCase()));
 
         if(andSearch)
             resultPhotos.addAll(Photos.driver.getCurrentUser().andTagSearch(searchTags, searchedAlbum));
@@ -110,18 +110,28 @@ public class SearchController {
     public void searchByDate() throws MalformedURLException {
         resultPhotos.clear();
         String startInput = beginningDateInput.getText().replaceAll("(/|\\|-)", "");
-        String endInput = beginningDateInput.getText().replaceAll("(/|\\|-)", "");
+        String endInput = endDateInput.getText().replaceAll("(/|\\|-)", "");
         if(startInput.equals(""))
             startInput = "01011970";
         if(endInput.equals(""))
             endInput = "01013000";
 
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("MMddYYYY");
+            SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
             Date start = sdf.parse(startInput);
             Date end = sdf.parse(endInput);
 
-            resultPhotos.addAll(Photos.driver.getCurrentUser().getPhotosInRange(start, end, searchedAlbum));
+            Calendar startCal = Calendar.getInstance();
+            Calendar endCal = Calendar.getInstance();
+
+            startCal.set(Calendar.MILLISECOND, 0);
+            startCal.setTimeInMillis(start.getTime());
+            endCal.set(Calendar.MILLISECOND, 0);
+            endCal.setTimeInMillis(end.getTime());
+            endCal.add(Calendar.DAY_OF_YEAR, 1);
+
+
+            resultPhotos.addAll(Photos.driver.getCurrentUser().getPhotosInRange(startCal, endCal, searchedAlbum));
         }catch(ParseException ex){
             showAlert("Invalid Input - ERROR", "One of the entered dates is invalid", Alert.AlertType.ERROR);
         }
@@ -149,7 +159,7 @@ public class SearchController {
             Text caption = new Text();
             Text date = new Text();
 
-            caption.setText(ph.getCaption());
+            caption.setText(ph.getCaption() + " | ");
 
             SimpleDateFormat df = new SimpleDateFormat("MM-dd-YYYY");
             String dateFormatted = df.format(ph.getDate().getTime());

@@ -126,14 +126,14 @@ public class AlbumController implements Navigatable, LogoutController{
             return;
         }
 
-        if(selectedPhoto.hasTag(new Tag(tag1.getText(), tag1val.getText()))){
+        if(selectedPhoto.hasTag(new Tag(tag1.getText().toLowerCase(), tag1val.getText().toLowerCase()))){
             showAlert("Invalid Input - ERROR", "This key-value pair already exists for this photo", Alert.AlertType.ERROR);
             return;
         }
 
-        selectedPhoto.addTag(tag1.getText(), tag1val.getText());
+        selectedPhoto.addTag(tag1.getText().toLowerCase(), tag1val.getText().toLowerCase());
         Text text = new Text();
-        text.setText(tag1.getText() + " : " + tag1val.getText());
+        text.setText(tag1.getText().toLowerCase() + " : " + tag1val.getText().toLowerCase());
         tagList.getItems().add(text);
     }
 
@@ -258,7 +258,7 @@ public class AlbumController implements Navigatable, LogoutController{
         Text caption = new Text();
         Text date = new Text();
 
-        caption.setText(ph.getCaption());
+        caption.setText(ph.getCaption() + " | ");
 
         SimpleDateFormat df = new SimpleDateFormat("MM-dd-YYYY");
         String dateFormatted = df.format(ph.getDate().getTime());
@@ -309,7 +309,7 @@ public class AlbumController implements Navigatable, LogoutController{
         if(selectedPhoto == null)
             return;
         Text temp = (Text) imageListview.getSelectionModel().getSelectedItem().getChildren().get(1);
-        temp.setText(captionInput.getText());
+        temp.setText(captionInput.getText() + " | ");
 
         Photo ph = selectedPhoto;
         ph.setCaption(captionInput.getText());

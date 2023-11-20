@@ -33,6 +33,11 @@ public class Album implements Serializable {
         return smallest.getDate();
     }
 
+    public Calendar getLatest(){
+        Photo smallest = photos.stream().max(Comparator.comparing(Photo::getDate)).get();
+        return smallest.getDate();
+    }
+
     public void addPhoto(Photo in){
         photos.add(in);
         //try {Persistence.save(Photos.driver);}

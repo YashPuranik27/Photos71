@@ -5,9 +5,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import photoalbum.Photos;
+import photoalbum.model.data.Album;
+import photoalbum.model.data.Photo;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -38,6 +45,8 @@ public class NonAdminController implements LogoutController, Navigatable{
     Label userTitle;
     //</editor-fold>
 
+    private ObservableList<HBox> hboxes = FXCollections.observableArrayList();
+
     public void initialize(){
         refreshList();
         titledPane.setText(Photos.driver.getCurrentUser().getName() + "'s Albums: ");
@@ -50,8 +59,39 @@ public class NonAdminController implements LogoutController, Navigatable{
     }
 
     public void refreshList(){
-        ObservableList<String> temp = FXCollections.observableArrayList(Photos.driver.getCurrentUser().albumNames);
-        albumsList.setItems(temp);
+        albumsList.getItems().clear();
+        hboxes.clear();
+
+        for(String name : Photos.driver.getCurrentUser().getAlbumNameList())
+            hboxes.add(makeHBox(Photos.driver.getCurrentUser().getAlbum(name)));
+        albumsList.setItems(hboxes);
+    }
+
+    private HBox makeHBox(Album in) {
+        try{
+            HBox entry = new HBox();
+            Text albumName = new Text();
+            Text photoCount = new Text();
+            Text earlyDate = new Text();
+            Text lateDate = new Text();
+
+            albumName.setText(in.getAlbumName());
+
+            SimpleDateFormat df = new SimpleDateFormat("MM-dd-YYYY");
+
+            photoCount.setText(" \t " + in.getPhotos().size() + " Photos");
+            if(in.getEarliestPhoto() != null)
+                earlyDate.setText(" \t Earliest: " + df.format(in.getEarliestPhoto().getTime()));
+            if(in.getLatest() != null)
+                lateDate.setText(" \t Latest: " + df.format(in.getLatest().getTime()));
+
+            entry.getChildren().addAll(albumName,photoCount,earlyDate,lateDate);
+            entry.setUserData(in.getAlbumName());
+
+            return entry;
+        }
+        catch(Exception ex){}
+        return null;
     }
 
     public void openAlbum(ActionEvent e) throws IOException{
@@ -60,8 +100,12 @@ public class NonAdminController implements LogoutController, Navigatable{
             return;
         }
 
-        if (!Photos.driver.getCurrentUser().lookAt((String) albumsList.getSelectionModel().getSelectedItem()))
+        if (!Photos.driver.getCurrentUser().lookAt((String) ((HBox) albumsList.getSelectionModel().getSelectedItem()).getUserData()))
             return;
+
+        if(Photos.driver.getCurrentUser().getName().equals("stock"))
+            if(Photos.driver.getCurrentUser().getLookAt().getAlbumName().equals("stock"))
+                Photos.driver.admin.regenerateStock();
 
         switchScene("/photoalbum/gui/fxml/AlbumPageUpdated.fxml", e.getSource());
     }
@@ -113,7 +157,7 @@ public class NonAdminController implements LogoutController, Navigatable{
             return;
         }
 
-        Photos.driver.getCurrentUser().renameAlbum((String) albumsList.getSelectionModel().getSelectedItem(), enteredAlbumName);
+        Photos.driver.getCurrentUser().renameAlbum((String) ((HBox) albumsList.getSelectionModel().getSelectedItem()).getUserData(), enteredAlbumName);
         refreshList();
     }
 
@@ -128,7 +172,7 @@ public class NonAdminController implements LogoutController, Navigatable{
             return;
         }
 
-        Photos.driver.getCurrentUser().deleteAlbum((String) albumsList.getSelectionModel().getSelectedItem());
+        Photos.driver.getCurrentUser().deleteAlbum((String) ((HBox) albumsList.getSelectionModel().getSelectedItem()).getUserData());
         refreshList();
     }
 
