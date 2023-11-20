@@ -16,11 +16,19 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import photoalbum.model.data.Persistence;
 
-
+/**
+ * Main entry point for the Photos application. This class initializes the application,
+ * sets up the primary stage, and handles persistence loading and saving upon exit.
+ */
 public class Photos extends Application {
-    private static final Logger LOGGER = Logger.getLogger(Photos.class.getName());
-    public static Persistence driver = new Persistence();
+    private static final Logger LOGGER = Logger.getLogger(Photos.class.getName()); // Logger for the application
+    public static Persistence driver = new Persistence(); // Persistence driver for saving and loading state
 
+    /**
+     * Starts the primary stage of the application, setting the scene and handling the save prompt on close.
+     *
+     * @param initialStage The primary stage for this application.
+     */
     @Override
     public void start(Stage initialStage) {
         try {
@@ -48,7 +56,11 @@ public class Photos extends Application {
             LOGGER.log(Level.SEVERE, "Error: cannot start the application", e);
         }
     }
-
+    /**
+     * The main entry point for the application. Loads persisted data and launches the application.
+     *
+     * @param args the command-line arguments passed to the application.
+     */
     public static void main(String[] args) {
         try {
             driver = Persistence.load();

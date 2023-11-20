@@ -1,3 +1,8 @@
+/**
+ * Authors
+ *
+ * @author Yash Puranik, Joseph Arrigo
+ */
 package photoalbum.gui.controller;
 
 
@@ -9,7 +14,11 @@ import javafx.scene.control.*;
 import photoalbum.Photos;
 
 import java.io.IOException;
-
+/**
+ * This class serves as the controller for the Admin view in a JavaFX application.
+ * It manages the user interface interactions related to administrative tasks such as
+ * adding or deleting users, refreshing the user list, and logging off.
+ */
 public class AdminController implements LogoutController {
 
     @FXML
@@ -25,11 +34,21 @@ public class AdminController implements LogoutController {
 
     ObservableList<String> observableArrayList;
 
+    /**
+     * Initializes the controller and refreshes the user list. This method is called automatically
+     * when the associated view is loaded.
+     */
     public void start() { // This method is called when the scene is loaded
         refresh();
         if (!observableArrayList.isEmpty()) UserList.getSelectionModel().select(0);
     }
-
+    /**
+     * Adds a new user based on the input from the 'Enteruser' TextField.
+     * It also checks for the validity of the username and uniqueness before adding.
+     *
+     * @param e The action event triggering this method.
+     * @throws IOException if an I/O error occurs.
+     */
     public void addUser(ActionEvent e) throws IOException {
         String userInput = Enteruser.getText().trim();
 
@@ -59,7 +78,12 @@ public class AdminController implements LogoutController {
         UserList.getSelectionModel().select(userInput);
         Enteruser.clear();
     }
-
+    /**
+     * Displays an alert dialog with a specified title and content.
+     *
+     * @param title   The title of the alert dialog.
+     * @param content The content text to be displayed inside the alert.
+     */
     private void showAlert(String title, String content) { // Helper method to show alerts. opens a new alert window
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -67,7 +91,12 @@ public class AdminController implements LogoutController {
         alert.showAndWait();
     }
 
-
+    /**
+     * Deletes a user from the list based on the selection in the 'UserList' ListView.
+     *
+     * @param e The action event triggering this method.
+     * @throws IOException if an I/O error occurs.
+     */
     public void deleteUser(ActionEvent e) throws IOException {
         int deleteIndex = UserList.getSelectionModel().getSelectedIndex(); // Get the index of the selected item
         if (deleteIndex < 0) return; // No selection made, exit early
@@ -90,18 +119,28 @@ public class AdminController implements LogoutController {
             }
         }
     }
-
+    /**
+     * Refreshes the ListView 'UserList' with the current list of users.
+     * It updates the observableArrayList with the latest usernames.
+     */
     public void refresh() { // Refreshes the listview
         UserList.refresh();
         observableArrayList = FXCollections.observableArrayList(Photos.driver.admin.getUsernameList()); // Gets the list of usernames
         UserList.setItems(observableArrayList);
         UserList.refresh();
     }
-
+    /**
+     * Initializes the controller class. This method is automatically called after the FXML fields have been injected.
+     */
     public void initialize(){
         refresh();
     }
-
+    /**
+     * Handles the logout operation for the admin user.
+     *
+     * @param e The action event triggering this method.
+     * @throws IOException if an I/O error occurs.
+     */
     public void logOut(ActionEvent e) throws IOException { // Logs out the user
         logMeOut(e);
     }

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"photoalbum"},{"l":"photoalbum.gui.controller"},{"l":"photoalbum.model.accounts"},{"l":"photoalbum.model.data"}];updateSearchResults();

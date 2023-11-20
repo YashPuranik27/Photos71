@@ -1,3 +1,8 @@
+/**
+ * Authors
+ *
+ * @author Yash Puranik, Joseph Arrigo
+ */
 package photoalbum.gui.controller;
 
 import javafx.collections.FXCollections;
@@ -28,7 +33,11 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Optional;
-
+/**
+ * Controller for the album view in the photo album application. This controller
+ * handles the interactions within the album view, such as adding and removing photos,
+ * navigating between photos, and managing photo tags and details.
+ */
 public class AlbumController implements Navigatable, LogoutController{
 
     //<editor-fold desc="FXML element declarations (Collapsible region)">
@@ -81,7 +90,9 @@ public class AlbumController implements Navigatable, LogoutController{
     private ArrayList<ImageView> imageList = new ArrayList<>();
     private ObservableList<HBox> hboxes = FXCollections.observableArrayList();
     private Photo selectedPhoto;
-
+    /**
+     * Initializes the AlbumController with default settings for the file chooser.
+     */
     public AlbumController(){
         chooser.setTitle("Choose image file");
         chooser.getExtensionFilters().addAll(
@@ -93,7 +104,12 @@ public class AlbumController implements Navigatable, LogoutController{
         );
         chooser.setInitialDirectory(new File(Paths.get(".").toAbsolutePath().normalize().toString()));
     }
-
+    /**
+     * Initializes the controller class. Called after the FXML fields have been injected.
+     * Prepares the album view with the photos and sets up listeners for UI interactions.
+     *
+     * @throws MalformedURLException if the path to the photo file is incorrect.
+     */
     public void initialize() throws MalformedURLException{
         beingDisplayed = Photos.driver.getCurrentUser().getLookAt();
         titledPane.setText(Photos.driver.getCurrentUser().getName() + "'s Album: " + beingDisplayed.getAlbumName());
@@ -119,7 +135,11 @@ public class AlbumController implements Navigatable, LogoutController{
             ph.setDetails(newVal);
         });
     }
-
+    /**
+     * Handles the action of adding a tag to a photo.
+     *
+     * @param e The event that triggered the action.
+     */
     public void addTag(ActionEvent e){
         if(tag1.getText().equals("") || tag1val.getText().equals("")){
             showAlert("Invalid Input - ERROR", "Either the new tag's key or value is empty", Alert.AlertType.ERROR);
@@ -136,7 +156,11 @@ public class AlbumController implements Navigatable, LogoutController{
         text.setText(tag1.getText().toLowerCase() + " : " + tag1val.getText().toLowerCase());
         tagList.getItems().add(text);
     }
-
+    /**
+     * Handles the action of removing a tag from a photo.
+     *
+     * @param e The event that triggered the action.
+     */
     public void removeTag(ActionEvent e){
         if(tagList.getSelectionModel().getSelectedItem() == null){
             showAlert("Invalid Selection - ERROR", "There is no tag selected in the list", Alert.AlertType.ERROR);
@@ -147,7 +171,12 @@ public class AlbumController implements Navigatable, LogoutController{
         tagList.getItems().remove(tagList.getSelectionModel().getSelectedItem().getText());
         reloadTags();
     }
-
+    /**
+     * Moves the selected photo up on the album's photo list.
+     *
+     * @param e The event that triggered the action.
+     * @throws MalformedURLException if the path to the photo file is incorrect.
+     */
     public void moveUp(ActionEvent e) throws MalformedURLException{
         if(selectedPhoto == null)
             return;
@@ -169,7 +198,13 @@ public class AlbumController implements Navigatable, LogoutController{
             Persistence.save(Photos.driver);}
             catch (IOException ex) {}
     }
-
+    /**
+     * Moves the selected photo down in the album's list view.
+     * If the selected photo is the last one, it won't do anything.
+     *
+     * @param e The event that triggered the action.
+     * @throws MalformedURLException if the path to the photo file is incorrect.
+     */
     public void moveDown(ActionEvent e) throws MalformedURLException{
         if(selectedPhoto == null)
             return;
@@ -191,7 +226,12 @@ public class AlbumController implements Navigatable, LogoutController{
         //try {Persistence.save(Photos.driver);}
         //    catch (IOException ex) {}
     }
-
+    /**
+     * Sets the selected photo in the album's view and updates the display accordingly.
+     * If the new photo is null, it will clear the photo display and associated details.
+     *
+     * @param newPhoto The new photo to be set as selected.
+     */
     private void setSelectedPhoto(Photo newPhoto) {
         try {
             if(newPhoto == null){
@@ -216,7 +256,9 @@ public class AlbumController implements Navigatable, LogoutController{
         }catch(Exception ex){
         }
     }
-
+    /**
+     * Reloads the tags associated with the currently selected photo and updates the tag list view.
+     */
     private void reloadTags(){
         ArrayList<Tag> tags = selectedPhoto.getTags();
         ObservableList<Text> tagsObs = FXCollections.observableArrayList();
@@ -229,7 +271,14 @@ public class AlbumController implements Navigatable, LogoutController{
         }
         tagList.setItems(tagsObs);
     }
-
+    /**
+     * Adds a new photo to the album. The user is prompted to choose a file, and if a file is selected,
+     * it is added to the album and the album view is updated.
+     *
+     * @param e The event that triggered the action.
+     * @throws IOException if there's an error reading the file.
+     * @throws MalformedURLException if the path to the photo file is incorrect.
+     */
     public void addPhoto(ActionEvent e) throws  IOException, MalformedURLException{
         File selected = chooser.showOpenDialog(new Stage());
 
@@ -246,7 +295,13 @@ public class AlbumController implements Navigatable, LogoutController{
 
         imageListview.getSelectionModel().select(hboxes.indexOf(toAdd));
     }
-
+    /**
+     * Creates an HBox containing the photo's image view and details such as caption and date.
+     * This HBox is used to display the photo in the list view.
+     *
+     * @param ph The photo to create an HBox for.
+     * @return The created HBox with the photo's details.
+     */
     private HBox makeHBox(Photo ph) {
         try{
         ImageView image = new ImageView();
@@ -273,7 +328,11 @@ public class AlbumController implements Navigatable, LogoutController{
         catch(Exception ex){}
         return null;
     }
-
+    /**
+     * Reloads all the photos from the currently being displayed album into the list view.
+     *
+     * @throws MalformedURLException if the path to the photo file is incorrect.
+     */
     private void reloadPhotos() throws MalformedURLException {
         imageList.clear();
         hboxes.clear();
@@ -293,7 +352,12 @@ public class AlbumController implements Navigatable, LogoutController{
         imageListview.setItems(hboxes);
 
     }
-
+    /**
+     * Removes the currently selected photo from the album and updates the list view.
+     *
+     * @param e The event that triggered the action.
+     * @throws MalformedURLException if the path to the photo file is incorrect.
+     */
     public void removePhoto(ActionEvent e) throws MalformedURLException{
         if(selectedPhoto == null)
             return;
@@ -304,7 +368,12 @@ public class AlbumController implements Navigatable, LogoutController{
             imageListview.getSelectionModel().select(0);
         }
     }
-
+    /**
+     * Adds a caption to the selected photo based on the user input from the caption text field.
+     *
+     * @param e The event that triggered the action.
+     * @throws MalformedURLException if the path to the photo file is incorrect.
+     */
     public void addCaption(ActionEvent e) throws MalformedURLException{
         if(selectedPhoto == null)
             return;
@@ -314,12 +383,24 @@ public class AlbumController implements Navigatable, LogoutController{
         Photo ph = selectedPhoto;
         ph.setCaption(captionInput.getText());
     }
-
+    /**
+     * Moves the selected photo to another album. If the copy operation is successful,
+     * the photo is then removed from the current album.
+     *
+     * @param e The event that triggered the action.
+     * @throws MalformedURLException if the path to the photo file is incorrect.
+     */
     public void movePhoto(ActionEvent e) throws MalformedURLException{
         if(copyPhoto(null))
             removePhoto(null);
     }
-
+    /**
+     * Copies the currently selected photo to another album chosen by the user.
+     * If the photo already exists in the target album, an error is displayed and no action is taken.
+     *
+     * @param e The event that triggered the action.
+     * @return True if the photo was successfully copied, false otherwise.
+     */
     public Boolean copyPhoto(ActionEvent e){
         if(selectedPhoto == null)
             return false;
@@ -348,7 +429,11 @@ public class AlbumController implements Navigatable, LogoutController{
         Photos.driver.getCurrentUser().addToAlbum(selectedPhoto, chosen.get());
         return true;
     }
-
+    /**
+     * Selects the next photo in the album's photo list view.
+     *
+     * @param e The event that triggered the action.
+     */
     public void nextPhoto(ActionEvent e){
         if(imageListview.getSelectionModel().getSelectedIndices().size() == 0)
             return;
@@ -362,7 +447,11 @@ public class AlbumController implements Navigatable, LogoutController{
 
         imageListview.getSelectionModel().select(nextInd);
     }
-
+    /**
+     * Selects the previous photo in the album's photo list view.
+     *
+     * @param e The event that triggered the action.
+     */
     public void previousPhoto(ActionEvent e){
         if(imageListview.getSelectionModel().getSelectedIndices().size() == 0)
             return;
@@ -376,26 +465,52 @@ public class AlbumController implements Navigatable, LogoutController{
         imageListview.getSelectionModel().select(nextInd);
     }
 
+    /**
+     * Logs out the current user and returns to the login view.
+     *
+     * @param e The event that triggered the action.
+     * @throws IOException if an I/O error occurs during logout.
+     */
     public void logOut(ActionEvent e) throws IOException{
         logMeOut(e);
     }
-
+    /**
+     * Initiates a photo search within the current album.
+     *
+     * @param e The event that triggered the action.
+     */
     public void search(ActionEvent e)  {
         popupAndWait("/photoalbum/gui/fxml/SearchPage.fxml", beingDisplayed.getAlbumName(),"Photo Search");
     }
-
+    /**
+     * Returns to the previous view, typically the non-admin user's album list view.
+     *
+     * @param e The event that triggered the action.
+     * @throws IOException if an I/O error occurs during the scene transition.
+     */
     public void goBack(ActionEvent e) throws IOException{
         Photos.driver.getCurrentUser().lookAt("");
         switchScene("/photoalbum/gui/fxml/NonAdminPage.fxml", e.getSource());
     }
-
+    /**
+     * Opens the selected photo using the default system application.
+     *
+     * @param e The event that triggered the action.
+     * @throws IOException if an error occurs while opening the file.
+     */
     public void displayPhoto(ActionEvent e) throws IOException {
         if(selectedPhoto == null)
             return;
         Desktop desktop = Desktop.getDesktop();
         desktop.open(selectedPhoto.getFilepath());
     }
-
+    /**
+     * Displays an alert dialog with the specified title and content.
+     *
+     * @param title   The title of the alert.
+     * @param content The content of the alert.
+     * @param type    The type of alert to display (e.g., ERROR).
+     */
     private void showAlert(String title, String content, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

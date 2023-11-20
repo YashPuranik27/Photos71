@@ -1,3 +1,8 @@
+/**
+ * Authors
+ *
+ * @author Yash Puranik, Joseph Arrigo
+ */
 package photoalbum.model.accounts;
 
 import photoalbum.Photos;
@@ -9,46 +14,83 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+/**
+ * Represents the administrator of the photo album application with the ability to manage users and regenerate
+ * the stock album with default photos.
+ */
 public class Admin implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String DEFAULT_ADMIN_USERNAME = "admin"; // used by LoginController
-    private List<User> users;
-    private String username;
-
+    private List<User> users; // List of users managed by the admin
+    private String username; // Username of the admin: "admin"
+    /**
+     * Constructs an Admin instance with a predefined list of users.
+     *
+     * @param users List of existing users to be managed by the admin.
+     */
     public Admin(List<User> users) {
         this.users = users;
         this.username = DEFAULT_ADMIN_USERNAME;
     }
-
+    /**
+     * Constructs an Admin instance with an empty list of users.
+     */
     public Admin() {
         this(new ArrayList<>());
     }
-
+    /**
+     * Sets the list of users managed by the admin.
+     *
+     * @param users The new list of users.
+     */
     public void setUsers(List<User> users) {
         this.users = users;
     }
-
+    /**
+     * Adds a user to the admin's list of users.
+     *
+     * @param userName The username of the new user.
+     */
     public void addUser(String userName) {
         users.add(new User(userName));
     }
-
+    /**
+     * Gets a copy of the list of users managed by the admin to prevent external modification.
+     *
+     * @return A new list containing the users.
+     */
     public List<User> getUsers() {
         return new ArrayList<>(users); // This should return a copy to avoid external modification
     }
-
+    /**
+     * Gets a list of usernames of all users managed by the admin.
+     *
+     * @return A list of usernames.
+     */
     public List<String> getUsernameList() {
         return users.stream().map(User::getName).collect(Collectors.toList());
     }
-
+    /**
+     * Checks if a user exists in the admin's list of users based on the username.
+     *
+     * @param userName The username to check.
+     * @return The index of the user in the list, or -1 if the user does not exist.
+     */
     public int userExists(String userName) {
         return users.stream().map(User::getName).collect(Collectors.toList()).indexOf(userName);
     }
-
+    /**
+     * Deletes a user from the admin's list based on the username.
+     *
+     * @param userName The username of the user to delete.
+     */
     public void deleteUser(String userName) {
         users.removeIf(user -> user.getName().equals(userName));
     }
-
+    /**
+     * Regenerates the stock album with photos from the "data/stock" directory,
+     * adding new photos that do not already exist in the album.
+     */
     public void regenerateStock(){
         User stock;
         if(!Photos.driver.checkUser("stock")){

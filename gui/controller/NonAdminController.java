@@ -1,3 +1,8 @@
+/**
+ * Authors
+ *
+ * @author Yash Puranik, Joseph Arrigo
+ */
 package photoalbum.gui.controller;
 
 import javafx.collections.FXCollections;
@@ -18,7 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class NonAdminController implements LogoutController, Navigatable{
+/**
+ * This class is the controller for the non-admin user interface of the photo album application.
+ * It handles operations such as opening, creating, renaming, and deleting albums, searching for
+ * albums by name, and logging out.
+ */
+public class NonAdminController implements LogoutController, Navigatable{ // default constructor
     //<editor-fold desc="FXML element declarations (Collapsible region)">
     @FXML
     Button openAlbum;
@@ -46,7 +56,9 @@ public class NonAdminController implements LogoutController, Navigatable{
     //</editor-fold>
 
     private ObservableList<HBox> hboxes = FXCollections.observableArrayList();
-
+    /**
+     * Initializes the controller, setting up the UI elements and their event handlers.
+     */
     public void initialize(){
         refreshList();
         titledPane.setText(Photos.driver.getCurrentUser().getName() + "'s Albums: ");
@@ -57,7 +69,9 @@ public class NonAdminController implements LogoutController, Navigatable{
 
         Photos.driver.getCurrentUser().lookAt("*");
     }
-
+    /**
+     * Refreshes the album list display with the current user's albums.
+     */
     public void refreshList(){
         albumsList.getItems().clear();
         hboxes.clear();
@@ -66,7 +80,12 @@ public class NonAdminController implements LogoutController, Navigatable{
             hboxes.add(makeHBox(Photos.driver.getCurrentUser().getAlbum(name)));
         albumsList.setItems(hboxes);
     }
-
+    /**
+     * Creates an HBox layout containing album information.
+     *
+     * @param in The album to create an HBox for.
+     * @return An HBox containing the album's details.
+     */
     private HBox makeHBox(Album in) {
         try{
             HBox entry = new HBox();
@@ -93,7 +112,12 @@ public class NonAdminController implements LogoutController, Navigatable{
         catch(Exception ex){}
         return null;
     }
-
+    /**
+     * Opens the selected album for viewing.
+     *
+     * @param e The event that triggered this action.
+     * @throws IOException If an error occurs during the scene change.
+     */
     public void openAlbum(ActionEvent e) throws IOException{
         if(albumsList.getSelectionModel().getSelectedItem() == null){
             showAlert("Invalid Selection - ERROR", "There is no album selected", Alert.AlertType.ERROR);
@@ -109,7 +133,11 @@ public class NonAdminController implements LogoutController, Navigatable{
 
         switchScene("/photoalbum/gui/fxml/AlbumPageUpdated.fxml", e.getSource());
     }
-
+    /**
+     * Handles the creation of a new album.
+     *
+     * @param e The event that triggered this action.
+     */
     public void createAlbum(ActionEvent e) {
         TextInputDialog td = new TextInputDialog();
 
@@ -132,7 +160,11 @@ public class NonAdminController implements LogoutController, Navigatable{
         Photos.driver.getCurrentUser().makeAlbum(enteredAlbumName);
         refreshList();
     }
-
+    /**
+     * Handles the renaming of an existing album.
+     *
+     * @param e The event that triggered this action.
+     */
     public void renameAlbum(ActionEvent e){
         if(albumsList.getSelectionModel().getSelectedItem() == null){
             showAlert("Invalid Selection - ERROR", "There is no album selected", Alert.AlertType.ERROR);
@@ -160,12 +192,21 @@ public class NonAdminController implements LogoutController, Navigatable{
         Photos.driver.getCurrentUser().renameAlbum((String) ((HBox) albumsList.getSelectionModel().getSelectedItem()).getUserData(), enteredAlbumName);
         refreshList();
     }
-
+    /**
+     * Initiates a search for albums based on the user's input.
+     *
+     * @param e The event that triggered this action.
+     * @throws IOException If an error occurs during scene change.
+     */
     public void search(ActionEvent e) throws IOException{
         popupAndWait("/photoalbum/gui/fxml/SearchPage.fxml", "*","Photo Search");
         switchScene("/photoalbum/gui/fxml/NonAdminPage.fxml",e.getSource());
     }
-
+    /**
+     * Deletes the selected album.
+     *
+     * @param e The event that triggered this action.
+     */
     public void deleteAlbum(ActionEvent e){
         if(albumsList.getSelectionModel().getSelectedItem() == null){
             showAlert("Invalid Selection - ERROR", "There is no album selected", Alert.AlertType.ERROR);
@@ -175,7 +216,11 @@ public class NonAdminController implements LogoutController, Navigatable{
         Photos.driver.getCurrentUser().deleteAlbum((String) ((HBox) albumsList.getSelectionModel().getSelectedItem()).getUserData());
         refreshList();
     }
-
+    /**
+     * Filters the list of albums based on a given search string.
+     *
+     * @param newVal The new value to filter the list by.
+     */
     private void search(String newVal){
         if(newVal.equals("")){
             refreshList();
@@ -189,11 +234,22 @@ public class NonAdminController implements LogoutController, Navigatable{
         ObservableList<String> temp = FXCollections.observableArrayList(matchStream.toList());
         albumsList.setItems(temp);
     }
-
+    /**
+     * Logs out the current user.
+     *
+     * @param e The event that triggered this action.
+     * @throws IOException If an error occurs during logging out.
+     */
     public void logOut(ActionEvent e) throws IOException {
         logMeOut(e);
     }
-
+    /**
+     * Displays an alert with a specific title and content.
+     *
+     * @param title   The title of the alert.
+     * @param content The content of the alert.
+     * @param type    The type of alert to display.
+     */
     private void showAlert(String title, String content, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

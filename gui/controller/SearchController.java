@@ -1,3 +1,8 @@
+/**
+ * Authors
+ *
+ * @author Yash Puranik, Joseph Arrigo
+ */
 package photoalbum.gui.controller;
 
 import javafx.application.Platform;
@@ -20,8 +25,11 @@ import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-public class SearchController {
+/**
+ * Controller for the search functionality within the photo album application.
+ * Allows for searching photos by date range or tags and saving search results as an album.
+ */
+public class SearchController { // default constructor
 
     @FXML
     AnchorPane anchorPane;
@@ -60,12 +68,21 @@ public class SearchController {
     private Boolean andSearch = false;
 
     private ObservableList<HBox> hboxes = FXCollections.observableArrayList();
-
+    /**
+     * Saves the current search results as a new album with the given name.
+     *
+     * @param e The action event that triggered the save.
+     */
     public void saveResultsAsAlbum(ActionEvent e){
         Album newAl = Photos.driver.getCurrentUser().makeAlbum(albumNameInput.getText());
         newAl.getPhotos().addAll(resultPhotos);
     }
 
+    /**
+     * Updates the list of photos displayed in the search results after deduplication.
+     *
+     * @throws MalformedURLException If the photo file paths are not valid URLs.
+     */
     private void updatePhotos() throws MalformedURLException {
         Set<Photo> uniquePhotos = new HashSet<>(resultPhotos);
         System.out.print(resultPhotos.size() + " ");
@@ -75,7 +92,11 @@ public class SearchController {
 
         reloadPhotos();
     }
-
+    /**
+     * Toggles the search mode between AND and OR for tag-based searches.
+     *
+     * @param e The action event that triggered the toggle.
+     */
     public void tagSwitch(ActionEvent e){
         if(tagSwitch.getText().equals("    ⬤")){
             andSearch = true;
@@ -85,7 +106,11 @@ public class SearchController {
             tagSwitch.setText("    ⬤");
         }
     }
-
+    /**
+     * Performs a search for photos based on the specified tags.
+     *
+     * @throws MalformedURLException If the photo file paths are not valid URLs.
+     */
     public void searchByTag() throws MalformedURLException {
         if((tag1val.getText().equals("") && !tag1.getText().equals("")) |
                  (tag2val.getText().equals("") && !tag2.getText().equals("")))
@@ -106,7 +131,11 @@ public class SearchController {
 
         updatePhotos();
     }
-
+    /**
+     * Performs a search for photos within a specified date range.
+     *
+     * @throws MalformedURLException If the photo file paths are not valid URLs.
+     */
     public void searchByDate() throws MalformedURLException {
         resultPhotos.clear();
         String startInput = beginningDateInput.getText().replaceAll("(/|\\|-)", "");
@@ -137,7 +166,9 @@ public class SearchController {
         }
         updatePhotos();
     }
-
+    /**
+     * Initializes the controller and sets up the search parameters based on the current user's context.
+     */
     public void initialize(){
         Platform.runLater(() -> {
             if(Photos.driver.getCurrentUser().getLookAt() == null)
@@ -147,7 +178,12 @@ public class SearchController {
             titledPane.setText("Searching " + Photos.driver.getCurrentUser().getName() +"'s photos" + (searchedAlbum.equals("*") ? "" : " from album: " + searchedAlbum));
         });
     }
-
+    /**
+     * Creates an HBox layout containing the photo, caption, and date for display in the search results.
+     *
+     * @param ph The photo to be displayed.
+     * @return An HBox containing the photo's details.
+     */
     private HBox makeHBox(Photo ph) {
         try{
             ImageView image = new ImageView();
@@ -174,6 +210,11 @@ public class SearchController {
         catch(Exception ex){}
         return null;
     }
+    /**
+     * Reloads the photos to be displayed in the search results.
+     *
+     * @throws MalformedURLException If the photo file paths are not valid URLs.
+     */
     private void reloadPhotos() throws MalformedURLException {
         hboxes.clear();
         searchResults.getItems().clear();
@@ -184,7 +225,13 @@ public class SearchController {
 
         searchResults.setItems(hboxes);
     }
-
+    /**
+     * Displays an alert dialog with the given title and content.
+     *
+     * @param title   The title of the alert.
+     * @param content The content of the alert.
+     * @param type    The type of alert to display (e.g., ERROR).
+     */
     private void showAlert(String title, String content, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

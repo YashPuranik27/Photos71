@@ -1,4 +1,8 @@
-// done
+/**
+ * Authors
+ *
+ * @author Yash Puranik, Joseph Arrigo
+ */
 package photoalbum.gui.controller;
 
 import javafx.event.ActionEvent;
@@ -12,9 +16,19 @@ import photoalbum.Photos;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
-
+/**
+ * The LogoutController interface defines the default behavior for controllers
+ * that have the functionality to log out a user and save their data.
+ */
 public interface LogoutController {
-
+    /**
+     * Logs out the user from the current session with an option to save their data.
+     * If the user confirms, the application's state is saved and the user is redirected
+     * to the login page.
+     *
+     * @param e The action event that triggered the logout.
+     * @throws IOException If an I/O error occurs during scene transition or saving data.
+     */
     default void logMeOut(ActionEvent e) throws IOException {
         Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to save and logout?", ButtonType.OK, ButtonType.CANCEL)
                 .showAndWait();
