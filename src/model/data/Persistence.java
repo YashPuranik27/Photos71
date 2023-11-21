@@ -36,7 +36,7 @@ public class Persistence implements Serializable { // default constructor
      * Adds a filepath-Photo pair to filepathsUsed, a Map used to track all existing Photo objects by their filepath property.
      *
      * @param fpIn The filepath from a Photo object, converted toString().
-     * @param photoIn
+     * @param photoIn The Photo instance corresponding to the image at that filepath.
      */
     public void addFilepath(String fpIn, Photo photoIn){
         System.out.println("Adding fp: " + fpIn);
