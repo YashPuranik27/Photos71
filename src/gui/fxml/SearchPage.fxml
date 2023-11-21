@@ -20,7 +20,7 @@
               </effect>
           </ListView>
       
-                            <Button fx:id="makeAlbum" layoutX="23.0" layoutY="356.0" onAction="#saveResultsAsAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 5;" text="Create Album with Results">
+                            <Button id="greenButton" fx:id="makeAlbum" layoutX="23.0" layoutY="356.0" onAction="#saveResultsAsAlbum" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 5;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Create Album with Results">
               <effect>
                   <DropShadow color="#999999" offsetX="2" offsetY="2" />
               </effect>
@@ -32,7 +32,7 @@
           <TextField fx:id="endDateInput" layoutX="211.0" layoutY="246.0" prefHeight="24.0" prefWidth="59.0" promptText="to" />
          <Label layoutX="10.0" layoutY="145.0" style="-fx-font-weight: bold; -fx-text-fill: #333;" text="AND" />
          <Label layoutX="92.0" layoutY="145.0" style="-fx-font-weight: bold; -fx-text-fill: #333;" text="OR" />
-         <Button fx:id="tagSwitch" layoutX="42.0" layoutY="140.0" mnemonicParsing="false" onAction="#tagSwitch" prefHeight="27.0" prefWidth="45.0" style="-fx-alignment: CENTER-LEFT; -fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="    ⬤">
+         <Button id="greenButton" fx:id="tagSwitch" layoutX="42.0" layoutY="140.0" mnemonicParsing="false" onAction="#tagSwitch" prefHeight="27.0" prefWidth="45.0" style="-fx-alignment: CENTER-LEFT; -fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="    ⬤">
             <font>
                <Font size="13.0" />
             </font>
@@ -42,12 +42,12 @@
           <TextField fx:id="tag1val" layoutX="212.0" layoutY="59.0" prefWidth="96.0" promptText="Tag Value" />
           <TextField fx:id="tag2" layoutX="70.0" layoutY="94.0" prefWidth="104.0" promptText="Tag Name" />
           <TextField fx:id="tag2val" layoutX="212.0" layoutY="94.0" prefWidth="96.0" promptText="Tag Value" />
-         <Button layoutX="145.0" layoutY="140.0" onAction="#searchByTag" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 5;" text="Search by Tags">
+         <Button id="greenButton" layoutX="145.0" layoutY="140.0" onAction="#searchByTag" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 5;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Search by Tags">
             <effect>
                <DropShadow color="#999999" offsetX="2" offsetY="2" />
             </effect>
          </Button>
-          <Button layoutX="144.0" layoutY="281.0" onAction="#searchByDate" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 5;" text="Search by Date">
+          <Button id="greenButton" layoutX="144.0" layoutY="281.0" onAction="#searchByDate" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 5;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Search by Date">
               <effect>
                   <DropShadow color="#999999" offsetX="2" offsetY="2" />
               </effect>

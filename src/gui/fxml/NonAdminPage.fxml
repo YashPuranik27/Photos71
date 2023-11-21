@@ -26,32 +26,32 @@
           </bottom>
          <right>
               <VBox alignment="CENTER" prefHeight="320.0" prefWidth="224.0" spacing="10" BorderPane.alignment="CENTER">
-                  <Button fx:id="openAlbum" onAction="#openAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Open Album">
+                  <Button id="greenButton" fx:id="openAlbum" onAction="#openAlbum" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Open Album">
                       <effect>
                           <DropShadow color="#999999" offsetX="2" offsetY="2" />
                       </effect>
                   </Button>
-                  <Button fx:id="createAlbum" onAction="#createAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Create Album">
+                  <Button id="greenButton" fx:id="createAlbum" onAction="#createAlbum" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Create Album">
                       <effect>
                           <DropShadow color="#999999" offsetX="2" offsetY="2" />
                       </effect>
                   </Button>
-                  <Button fx:id="renameAlbum" onAction="#renameAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Rename Album">
+                  <Button id="greenButton" fx:id="renameAlbum" onAction="#renameAlbum" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Rename Album">
                       <effect>
                           <DropShadow color="#999999" offsetX="2" offsetY="2" />
                       </effect>
                   </Button>
-                  <Button fx:id="deleteAlbum" onAction="#deleteAlbum" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Delete Album">
+                  <Button id="greenButton" fx:id="deleteAlbum" onAction="#deleteAlbum" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Delete Album">
                       <effect>
                           <DropShadow color="#999999" offsetX="2" offsetY="2" />
                       </effect>
                   </Button>
-               <Button fx:id="searchButton" onAction="#search" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Search All Photos">
+               <Button id="greenButton" fx:id="searchButton" onAction="#search" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Search All Photos">
                   <effect>
                      <DropShadow color="#999999" offsetX="2" offsetY="2" />
                   </effect>
                </Button>
-                  <Button fx:id="logout" onAction="#logOut" style="-fx-background-color: red; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Logout">
+                  <Button id="redButton" fx:id="logout" onAction="#logOut" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" styleClass="redButton" stylesheets="@css/buttons.css" text="Logout">
                       <effect>
                           <DropShadow color="#999999" offsetX="2" offsetY="2" />
                       </effect>

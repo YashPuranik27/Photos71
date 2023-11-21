@@ -95,10 +95,8 @@ public class SearchController { // default constructor
      */
     private void updatePhotos(){
         Set<Photo> uniquePhotos = new HashSet<>(resultPhotos);
-        System.out.print(resultPhotos.size() + " ");
         resultPhotos.clear();
         resultPhotos.addAll(uniquePhotos);
-        System.out.println(resultPhotos.size());
 
         reloadPhotos();
     }

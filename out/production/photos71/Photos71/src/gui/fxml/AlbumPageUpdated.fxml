@@ -41,33 +41,33 @@
             </ScrollPane>
             <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="addPhoto" mnemonicParsing="false" onAction="#addPhoto" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Add Photo">
+                  <Button id="greenButton" fx:id="addPhoto" mnemonicParsing="false" onAction="#addPhoto" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Add Photo">
                      <FlowPane.margin>
                         <Insets right="10.0" />
                      </FlowPane.margin>
                   </Button>
-                  <Button fx:id="removePhoto" mnemonicParsing="false" onAction="#removePhoto" style="-fx-background-color: #b85c5c; -fx-text-fill: white; -fx-background-radius: 10;" text="Remove" />
-                  <Button fx:id="movePhoto" mnemonicParsing="false" onAction="#movePhoto" style="-fx-background-color: #b8b85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Move">
+                  <Button id="dimRedButton" fx:id="removePhoto" mnemonicParsing="false" onAction="#removePhoto" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="redButton" stylesheets="@css/buttons.css" text="Remove" />
+                  <Button id="yellowButton" fx:id="movePhoto" mnemonicParsing="false" onAction="#movePhoto" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="yellowButton" stylesheets="@css/buttons.css" text="Move">
                      <FlowPane.margin>
                         <Insets left="20.0" />
                      </FlowPane.margin>
                   </Button>
-                  <Button fx:id="copyPhoto" mnemonicParsing="false" onAction="#copyPhoto" style="-fx-background-color: #b8b85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Copy">
+                  <Button id="yellowButton" fx:id="copyPhoto" mnemonicParsing="false" onAction="#copyPhoto" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="yellowButton" stylesheets="@css/buttons.css" text="Copy">
                      <FlowPane.margin>
                         <Insets left="10.0" />
                      </FlowPane.margin>
                   </Button>
-                  <Button fx:id="filterSelector" mnemonicParsing="false" onAction="#search" prefHeight="25.0" prefWidth="187.0" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Search Photos in Album">
+                  <Button id="greenButton" fx:id="filterSelector" mnemonicParsing="false" onAction="#search" prefHeight="25.0" prefWidth="187.0" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Search Photos in Album">
                      <FlowPane.margin>
                         <Insets top="10.0" />
                      </FlowPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#moveUp" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="^">
+                  <Button id="greenButton" mnemonicParsing="false" onAction="#moveUp" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="^">
                      <FlowPane.margin>
                         <Insets left="20.0" top="10.0" />
                      </FlowPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#moveDown" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="v">
+                  <Button id="greenButton" mnemonicParsing="false" onAction="#moveDown" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="v">
                      <FlowPane.margin>
                         <Insets left="5.0" top="10.0" />
                      </FlowPane.margin>
@@ -76,7 +76,7 @@
             </FlowPane>
             <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <left>
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-padding: 5;" text="Back" BorderPane.alignment="CENTER">
+                  <Button id="greenButton" fx:id="backButton" mnemonicParsing="false" onAction="#goBack" style="-fx-text-fill: white; -fx-padding: 5;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Back" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets left="30.0" />
                      </BorderPane.margin>
@@ -85,7 +85,7 @@
             </BorderPane>
             <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <right>
-                  <Button fx:id="logout" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: red; -fx-text-fill: white; -fx-padding: 5;" text="Logout" BorderPane.alignment="CENTER">
+                  <Button id="redButton" fx:id="logout" mnemonicParsing="false" onAction="#logOut" style="-fx-text-fill: white; -fx-padding: 5;" styleClass="redButton" stylesheets="@css/buttons.css" text="Logout" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets right="30.0" />
                      </BorderPane.margin>
@@ -116,12 +116,12 @@
                               <Insets left="5.0" />
                            </FlowPane.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" onAction="#addTag" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Add">
+                        <Button id="greenButton" mnemonicParsing="false" onAction="#addTag" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Add">
                            <FlowPane.margin>
                               <Insets left="10.0" />
                            </FlowPane.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#removeTag" style="-fx-background-color: #b85c5c; -fx-text-fill: white; -fx-background-radius: 10;" text="Remove">
+                        <Button id="dimRedButton" mnemonicParsing="false" onAction="#removeTag" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="redButton" stylesheets="@css/buttons.css" text="Remove">
                            <FlowPane.margin>
                               <Insets left="10.0" />
                            </FlowPane.margin>
@@ -130,8 +130,8 @@
                   </FlowPane>
                   <FlowPane>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addKeyToPreset" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Add Key to Presets" />
-                        <Button mnemonicParsing="false" onAction="#addKeyFromPreset" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Add Key from Presets">
+                        <Button id="greenButton" mnemonicParsing="false" onAction="#addKeyToPreset" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Add Key to Presets" />
+                        <Button id="greenButton" mnemonicParsing="false" onAction="#addKeyFromPreset" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Add Key from Presets">
                            <FlowPane.margin>
                               <Insets left="20.0" />
                            </FlowPane.margin>
@@ -147,7 +147,7 @@
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin></TextField>
-                        <Button fx:id="setCaption" mnemonicParsing="false" onAction="#addCaption" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Set Caption">
+                        <Button id="greenButton" fx:id="setCaption" mnemonicParsing="false" onAction="#addCaption" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Set Caption">
                            <FlowPane.margin>
                               <Insets left="5.0" top="10.0" />
                            </FlowPane.margin></Button>
@@ -167,14 +167,14 @@
             </VBox>
             <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <left>
-                  <Button fx:id="previousPhoto" mnemonicParsing="false" onAction="#previousPhoto" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Previous Photo" BorderPane.alignment="CENTER">
+                  <Button id="greenButton" fx:id="previousPhoto" mnemonicParsing="false" onAction="#previousPhoto" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Previous Photo" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets left="30.0" />
                      </BorderPane.margin>
                   </Button>
                </left>
                <right>
-                  <Button fx:id="nextPhoto" mnemonicParsing="false" onAction="#nextPhoto" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10;" text="Next Photo" BorderPane.alignment="CENTER">
+                  <Button id="greenButton" fx:id="nextPhoto" mnemonicParsing="false" onAction="#nextPhoto" style="-fx-text-fill: white; -fx-background-radius: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Next Photo" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets right="30.0" />
                      </BorderPane.margin>

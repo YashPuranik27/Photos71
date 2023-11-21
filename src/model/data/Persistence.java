@@ -14,6 +14,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Handles the persistence layer of the photo album application, managing the saving and loading
@@ -39,7 +40,6 @@ public class Persistence implements Serializable { // default constructor
      * @param photoIn The Photo instance corresponding to the image at that filepath.
      */
     public void addFilepath(String fpIn, Photo photoIn){
-        System.out.println("Adding fp: " + fpIn);
         filepathsUsed.put(fpIn, photoIn);
     }
 
@@ -120,11 +120,10 @@ public class Persistence implements Serializable { // default constructor
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(STORE_DIR + File.separator + STORE_FILE))) {
             oos.writeObject(pdApp);
         }catch(IOException ex){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Persistence Failure - ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("Unable to save data.");
-                alert.showAndWait();
+            Logger logger
+                    = Logger.getLogger(
+                    Persistence.class.getName());
+                logger.warning("Unable to save data.");
         }
     }
     /**
@@ -136,22 +135,17 @@ public class Persistence implements Serializable { // default constructor
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(STORE_DIR + File.separator + STORE_FILE))) {
             return (Persistence) ois.readObject();
         }catch (Exception ex){
+            Logger logger
+                    = Logger.getLogger(
+                    Persistence.class.getName());
             if(ex.getClass() == IOException.class){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Persistence Failure - ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("Persistence file data/savedData/info.dat is missing.\nCreating a new one.");
-                alert.showAndWait();
+                logger.warning("Persistence file data/savedData/info.dat is missing.\nCreating a new one.");
                 Persistence newOne = new Persistence();
                 save(newOne);
                 return newOne;
             }else{
                 //ClassNotFoundException. Implies info.dat is out of date
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Persistence Failure - ERROR");
-                alert.setHeaderText(null);
-                alert.setContentText("Error loading data/savedData/info.dat. Is it out of date? \nGenerating a new info.dat.");
-                alert.showAndWait();
+                logger.warning("Error loading data/savedData/info.dat. Is it out of date? \nGenerating a new info.dat.");
                 Persistence newOne = new Persistence();
                 save(newOne);
                 return newOne;

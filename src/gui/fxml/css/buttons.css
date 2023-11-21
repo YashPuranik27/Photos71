@@ -1,0 +1,39 @@
+#greenButton{
+  -fx-background-color: #5cb85c;
+}
+#greenButton:hover{     
+  -fx-background-color: #5D995D;
+}
+#greenButton:pressed{     
+  -fx-background-color: #347F34;
+}
+
+#redButton{
+  -fx-background-color: red;
+}
+#redButton:hover{     
+  -fx-background-color: #CE4848;
+}
+#redButton:pressed{     
+  -fx-background-color: #B52424;
+}
+
+#dimRedButton{
+  -fx-background-color: #b85c5c;
+}
+#dimRedButton:hover{     
+  -fx-background-color: #CE4848;
+}
+#dimRedButton:pressed{     
+  -fx-background-color: #B52424;
+}
+
+#yellowButton{
+  -fx-background-color: #b8b85c;
+}
+#yellowButton:hover{     
+  -fx-background-color: #5D995D;
+}
+#yellowButton:pressed{     
+  -fx-background-color: #347F34;
+}

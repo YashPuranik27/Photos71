@@ -11,7 +11,7 @@
     <VBox alignment="CENTER" spacing="20">
         <Text style="-fx-font-size: 47px; -fx-font-weight: bold; -fx-fill: #333;" text="Photos" />
         <TextField fx:id="nameInput" maxWidth="200" onKeyPressed="#keyPress" promptText="Username" />
-        <Button fx:id="loginButton" onAction="#login" style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" text="Enter">
+        <Button id="greenButton" fx:id="loginButton" onAction="#login" style="-fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;" styleClass="greenButton" stylesheets="@css/buttons.css" text="Enter">
             <effect>
                 <DropShadow color="#999999" offsetX="2" offsetY="2" />
             </effect>

@@ -67,6 +67,8 @@ public class LoginController implements Navigatable{ // default constructor
         if (username.equals("admin")) {
             Photos.driver.setCurrentUser(new User("admin"));
             switchScene("/Photos71/src/gui/fxml/AdminPage.fxml", source);
+        } else if(!Photos.driver.checkUser(username) && username.equals("stock")) {
+            showAlert("Stock was Deleted", "The stock account has been deleted. To access stock images again, recreate the stock user as admin.", AlertType.ERROR);
         } else if (Photos.driver.checkUser(username)) {
             switchScene("/Photos71/src/gui/fxml/NonAdminPage.fxml", source);
         } else {

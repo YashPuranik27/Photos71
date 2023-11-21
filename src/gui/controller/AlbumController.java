@@ -285,7 +285,6 @@ public class AlbumController implements Navigatable, LogoutController{
         if (selected == null)
             return;
 
-        System.out.println("Searching for fp: " + selected.toString());
         Photo photo = Photos.driver.hasFilepath(selected.toString());
 
         if(photo == null) {
@@ -413,7 +412,6 @@ public class AlbumController implements Navigatable, LogoutController{
             return false;
         }
 
-        System.out.println(Photos.driver.getCurrentUser().getAlbumNameList());
         ArrayList<String> userAlbums = (ArrayList<String>) Photos.driver.getCurrentUser().getAlbumNameList().clone();
         userAlbums.remove(beingDisplayed.getAlbumName());
 
@@ -519,7 +517,6 @@ public class AlbumController implements Navigatable, LogoutController{
                 .showAndWait();
         if (confirm.isPresent() && confirm.get() == ButtonType.YES) {
             Photos.driver.getCurrentUser().presetKeyList.add(tag1.getText());
-            System.out.println(Photos.driver.getCurrentUser().presetKeyList);
         }
     }
     /**

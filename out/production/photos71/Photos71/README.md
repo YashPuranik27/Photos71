@@ -7,6 +7,9 @@ We've included below a configuration guide for the JavaFX Library. It contains a
 
 The file `src/photos/Photos.java` is the main class and it contains the main method. Run this file to start the App.
 Compiled code is found in `out/production/photos71/Photos71`
+
+We used Java 20 for this project.
+
 ## Library Configuration Guide
 
 For this project, the JavaFX sdk found in folder `lib` was used. It is attached to this repository for your convenience, however you can use your own JavaFX library.

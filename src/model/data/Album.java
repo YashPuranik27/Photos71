@@ -18,7 +18,7 @@ public class Album implements Serializable {
 
     public static final long serialVersionUID = 1L; // Serialization identifier
 
-    private ArrayList<Photo> photos = new ArrayList<>(); // The photos contained in the album
+    private ArrayList<Photo> photos = new ArrayList<>(); // The photos contained on the album
     private String albumName = "Untitled"; // The name of the album
     /**
      * Constructs an Album with the specified name.

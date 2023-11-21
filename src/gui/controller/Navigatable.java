@@ -75,8 +75,12 @@ public interface Navigatable {
             inputStage.setTitle(title);
 
             inputStage.showAndWait();
-        } catch (Exception ex) {
-            System.out.println(ex);
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("IO Failure - ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText("Error loading " + fxmlPath);
+            alert.showAndWait();
         }
     }
 }
