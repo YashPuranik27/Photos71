@@ -64,11 +64,7 @@ public class Photos extends Application {
      * @param args the command-line arguments passed to the application.
      */
     public static void main(String[] args) {
-        try {
-            driver = Persistence.load();
-        } catch (IOException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error: cannot load persistence data", e);
-        }
+        driver = Persistence.load();
         launch(args);
     }
 }

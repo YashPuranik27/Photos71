@@ -37,9 +37,8 @@ public class LoginController implements Navigatable{ // default constructor
      * it triggers the login process.
      *
      * @param e The key event that triggered this method.
-     * @throws IOException If an I/O error occurs during scene switching.
      */
-    public void keyPress(KeyEvent e) throws IOException{
+    public void keyPress(KeyEvent e) {
         if(e.getCode().equals(KeyCode.ENTER))
             login(e.getSource());
     }
@@ -47,9 +46,8 @@ public class LoginController implements Navigatable{ // default constructor
      * Called when the login button is pressed, this method initiates the login process.
      *
      * @param e The action event that triggered this method.
-     * @throws IOException If an I/O error occurs during scene switching.
      */
-    public void login(ActionEvent e) throws IOException{
+    public void login(ActionEvent e) {
         login(e.getSource());
     }
     /**
@@ -57,9 +55,8 @@ public class LoginController implements Navigatable{ // default constructor
      * appropriate view depending on whether the username is 'admin' or another user.
      *
      * @param source The source object of the event triggering login.
-     * @throws IOException If an I/O error occurs during scene switching.
      */
-    private void login(Object source) throws IOException {
+    private void login(Object source){
         String username = nameInput.getText().trim();
 
         if (username.isEmpty()) {

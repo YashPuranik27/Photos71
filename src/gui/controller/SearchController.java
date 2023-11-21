@@ -76,16 +76,24 @@ public class SearchController { // default constructor
      * @param e The action event that triggered the save.
      */
     public void saveResultsAsAlbum(ActionEvent e){
-        Album newAl = Photos.driver.getCurrentUser().makeAlbum(albumNameInput.getText());
+        if(albumNameInput.getText().trim().equals("")){
+            showAlert("Invalid Input - ERROR", "Album name must be at least 1 character", Alert.AlertType.ERROR);
+            return;
+        }
+
+        if(Photos.driver.getCurrentUser().albumNames.contains(albumNameInput.getText().trim())){
+            showAlert("Invalid Input - ERROR", "Album name is already in use", Alert.AlertType.ERROR);
+            return;
+        }
+        Album newAl = Photos.driver.getCurrentUser().makeAlbum(albumNameInput.getText().trim());
         newAl.getPhotos().addAll(resultPhotos);
     }
 
     /**
      * Updates the list of photos displayed in the search results after deduplication.
      *
-     * @throws MalformedURLException If the photo file paths are not valid URLs.
      */
-    private void updatePhotos() throws MalformedURLException {
+    private void updatePhotos(){
         Set<Photo> uniquePhotos = new HashSet<>(resultPhotos);
         System.out.print(resultPhotos.size() + " ");
         resultPhotos.clear();
@@ -111,12 +119,24 @@ public class SearchController { // default constructor
     /**
      * Performs a search for photos based on the specified tags.
      *
-     * @throws MalformedURLException If the photo file paths are not valid URLs.
      */
-    public void searchByTag() throws MalformedURLException {
+    public void searchByTag() {
         if((tag1val.getText().equals("") && !tag1.getText().equals("")) |
-                 (tag2val.getText().equals("") && !tag2.getText().equals("")))
+                 (tag2val.getText().equals("") && !tag2.getText().equals(""))){
+            showAlert("Invalid Input - ERROR", "There is a key without a value.", Alert.AlertType.ERROR);
             return;
+        }
+
+        if((!tag1val.getText().equals("") && tag1.getText().equals("")) |
+                (!tag2val.getText().equals("") && tag2.getText().equals(""))){
+            showAlert("Invalid Input - ERROR", "There is a value without a key.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        if(tag1.getText().equals("") && tag2.getText().equals("")){
+            showAlert("Invalid Input - ERROR", "There are no tags entered.", Alert.AlertType.ERROR);
+            return;
+        }
 
         resultPhotos.clear();
         ArrayList<Tag> searchTags = new ArrayList<>();
@@ -136,15 +156,14 @@ public class SearchController { // default constructor
     /**
      * Performs a search for photos within a specified date range.
      *
-     * @throws MalformedURLException If the photo file paths are not valid URLs.
      */
-    public void searchByDate() throws MalformedURLException {
+    public void searchByDate() {
         resultPhotos.clear();
         String startInput = beginningDateInput.getText().replaceAll("(/|\\|-)", "");
         String endInput = endDateInput.getText().replaceAll("(/|\\|-)", "");
-        if(startInput.equals(""))
+        if (startInput.equals(""))
             startInput = "01011970";
-        if(endInput.equals(""))
+        if (endInput.equals(""))
             endInput = "01013000";
 
         try {
@@ -155,6 +174,15 @@ public class SearchController { // default constructor
             Calendar startCal = Calendar.getInstance();
             Calendar endCal = Calendar.getInstance();
 
+            if(endCal.before(startCal)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Input - ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("End date can not be before start date.");
+                alert.showAndWait();
+                return;
+            }
+
             startCal.set(Calendar.MILLISECOND, 0);
             startCal.setTimeInMillis(start.getTime());
             endCal.set(Calendar.MILLISECOND, 0);
@@ -163,7 +191,7 @@ public class SearchController { // default constructor
 
 
             resultPhotos.addAll(Photos.driver.getCurrentUser().getPhotosInRange(startCal, endCal, searchedAlbum));
-        }catch(ParseException ex){
+        } catch (ParseException ex) {
             showAlert("Invalid Input - ERROR", "One of the entered dates is invalid", Alert.AlertType.ERROR);
         }
         updatePhotos();
@@ -215,9 +243,8 @@ public class SearchController { // default constructor
     /**
      * Reloads the photos to be displayed in the search results.
      *
-     * @throws MalformedURLException If the photo file paths are not valid URLs.
      */
-    private void reloadPhotos() throws MalformedURLException {
+    private void reloadPhotos(){
         hboxes.clear();
         searchResults.getItems().clear();
 

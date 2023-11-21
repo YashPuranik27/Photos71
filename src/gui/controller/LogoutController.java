@@ -29,17 +29,25 @@ public interface LogoutController {
      * to the login page.
      *
      * @param e The action event that triggered the logout.
-     * @throws IOException If an I/O error occurs during scene transition or saving data.
      */
-    default void logMeOut(ActionEvent e) throws IOException {
+    default void logMeOut(ActionEvent e){
         Optional<ButtonType> confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to save and logout?", ButtonType.OK, ButtonType.CANCEL)
                 .showAndWait();
         if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
             Persistence.save(Photos.driver);
-            Parent newScene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Photos71/src/gui/fxml/LoginPage.fxml")));
-            Stage appStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            appStage.setScene(new Scene(newScene));
-            appStage.show();
+            Parent newScene;
+            try {
+                newScene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Photos71/src/gui/fxml/LoginPage.fxml")));
+                Stage appStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                appStage.setScene(new Scene(newScene));
+                appStage.show();
+            }catch(IOException ex){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("IO Failure - ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("Error loading src/gui/fxml/LoginPage.fxml");
+                alert.showAndWait();
+            }
         }
     }
 }

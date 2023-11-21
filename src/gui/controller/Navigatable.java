@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
@@ -30,20 +31,27 @@ public interface Navigatable {
      *
      * @param fxmlPath The relative path to the FXML file that describes the new scene.
      * @param source   The source object of the event triggering the scene switch.
-     * @throws IOException If the FXML file cannot be loaded.
      */
     //This is Yash's code, I moved it here for reusability - Joe
-    default void switchScene(String fxmlPath, Object source) throws IOException {
+    default void switchScene(String fxmlPath, Object source) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxmlPath));
-        Parent sceneManager = loader.load();
-        Scene newScene = new Scene(sceneManager);
-        Stage primaryStage = (Stage) ((Node) source).getScene().getWindow();
-        primaryStage.setScene(newScene);
-        primaryStage.show();
+        try {
+            Parent sceneManager = loader.load();
+            Scene newScene = new Scene(sceneManager);
+            Stage primaryStage = (Stage) ((Node) source).getScene().getWindow();
+            primaryStage.setScene(newScene);
+            primaryStage.show();
 
-        if (loader.getController() instanceof Initializable) {
-            ((Initializable) loader.getController()).initialize(null, null);
+            if (loader.getController() instanceof Initializable) {
+                ((Initializable) loader.getController()).initialize(null, null);
+            }
+        }catch(IOException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("IO Failure - ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText("Error loading " + fxmlPath);
+            alert.showAndWait();
         }
     }
     /**

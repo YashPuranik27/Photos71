@@ -8,6 +8,7 @@ package Photos71.src.model.data;
 import Photos71.src.photos.Photos;
 import Photos71.src.model.accounts.Admin;
 import Photos71.src.model.accounts.User;
+import javafx.scene.control.Alert;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -77,14 +78,6 @@ public class Persistence implements Serializable { // default constructor
         return res >= 0;
     }
     /**
-     * Gets the index of the current user in the admin's user list.
-     *
-     * @return The index of the current user.
-     */
-    public int getUserIndex() {
-        return admin.getUsers().indexOf(Photos.driver.getCurrentUser());
-    }
-    /**
      * Retrieves a User object by username.
      *
      * @param username The username of the user to retrieve.
@@ -122,23 +115,47 @@ public class Persistence implements Serializable { // default constructor
      * Saves the current state of the application to a file.
      *
      * @param pdApp The Persistence object containing the application's state.
-     * @throws IOException If an I/O error occurs during saving.
      */
-    public static void save(Persistence pdApp) throws IOException {
+    public static void save(Persistence pdApp){
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(STORE_DIR + File.separator + STORE_FILE))) {
             oos.writeObject(pdApp);
+        }catch(IOException ex){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Persistence Failure - ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("Unable to save data.");
+                alert.showAndWait();
         }
     }
     /**
      * Loads the application's state from a file.
      *
      * @return The Persistence object representing the loaded application's state.
-     * @throws IOException            If an I/O error occurs during loading.
-     * @throws ClassNotFoundException If the class of a serialized object cannot be found.
      */
-    public static Persistence load() throws IOException, ClassNotFoundException {
+    public static Persistence load(){
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(STORE_DIR + File.separator + STORE_FILE))) {
             return (Persistence) ois.readObject();
+        }catch (Exception ex){
+            if(ex.getClass() == IOException.class){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Persistence Failure - ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("Persistence file data/savedData/info.dat is missing.\nCreating a new one.");
+                alert.showAndWait();
+                Persistence newOne = new Persistence();
+                save(newOne);
+                return newOne;
+            }else{
+                //ClassNotFoundException. Implies info.dat is out of date
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Persistence Failure - ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("Error loading data/savedData/info.dat. Is it out of date? \nGenerating a new info.dat.");
+                alert.showAndWait();
+                Persistence newOne = new Persistence();
+                save(newOne);
+                return newOne;
+            }
         }
     }
 }

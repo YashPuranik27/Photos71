@@ -49,9 +49,8 @@ public class AdminController implements LogoutController {
      * It also checks for the validity of the username and uniqueness before adding.
      *
      * @param e The action event triggering this method.
-     * @throws IOException if an I/O error occurs.
      */
-    public void addUser(ActionEvent e) throws IOException {
+    public void addUser(ActionEvent e) {
         String userInput = Enteruser.getText().trim();
 
         if (userInput == null || userInput.isEmpty()) { // If user input is empty
@@ -97,9 +96,8 @@ public class AdminController implements LogoutController {
      * Deletes a user from the list based on the selection in the 'UserList' ListView.
      *
      * @param e The action event triggering this method.
-     * @throws IOException if an I/O error occurs.
      */
-    public void deleteUser(ActionEvent e) throws IOException {
+    public void deleteUser(ActionEvent e){
         int deleteIndex = UserList.getSelectionModel().getSelectedIndex(); // Get the index of the selected item
         if (deleteIndex < 0) return; // No selection made, exit early
 
@@ -141,9 +139,8 @@ public class AdminController implements LogoutController {
      * Handles the logout operation for the admin user.
      *
      * @param e The action event triggering this method.
-     * @throws IOException if an I/O error occurs.
      */
-    public void logOut(ActionEvent e) throws IOException { // Logs out the user
+    public void logOut(ActionEvent e) { // Logs out the user
         logMeOut(e);
     }
 

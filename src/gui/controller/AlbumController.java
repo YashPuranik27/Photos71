@@ -108,9 +108,8 @@ public class AlbumController implements Navigatable, LogoutController{
      * Initializes the controller class. Called after the FXML fields have been injected.
      * Prepares the album view with the photos and sets up listeners for UI interactions.
      *
-     * @throws MalformedURLException if the path to the photo file is incorrect.
      */
-    public void initialize() throws MalformedURLException{
+    public void initialize(){
         beingDisplayed = Photos.driver.getCurrentUser().getLookAt();
         titledPane.setText(Photos.driver.getCurrentUser().getName() + "'s Album: " + beingDisplayed.getAlbumName());
 
@@ -141,6 +140,10 @@ public class AlbumController implements Navigatable, LogoutController{
      * @param e The event that triggered the action.
      */
     public void addTag(ActionEvent e){
+        if(selectedPhoto == null){
+            showAlert("Invalid Selection - ERROR", "There is no photo selected", Alert.AlertType.ERROR);
+            return;
+        }
         if(tag1.getText().equals("") || tag1val.getText().equals("")){
             showAlert("Invalid Input - ERROR", "Either the new tag's key or value is empty", Alert.AlertType.ERROR);
             return;
@@ -162,6 +165,10 @@ public class AlbumController implements Navigatable, LogoutController{
      * @param e The event that triggered the action.
      */
     public void removeTag(ActionEvent e){
+        if(selectedPhoto == null){
+            showAlert("Invalid Selection - ERROR", "There is no photo selected", Alert.AlertType.ERROR);
+            return;
+        }
         if(tagList.getSelectionModel().getSelectedItem() == null){
             showAlert("Invalid Selection - ERROR", "There is no tag selected in the list", Alert.AlertType.ERROR);
             return;
@@ -175,9 +182,8 @@ public class AlbumController implements Navigatable, LogoutController{
      * Moves the selected photo up on the album's photo list.
      *
      * @param e The event that triggered the action.
-     * @throws MalformedURLException if the path to the photo file is incorrect.
      */
-    public void moveUp(ActionEvent e) throws MalformedURLException{
+    public void moveUp(ActionEvent e) {
         if(selectedPhoto == null)
             return;
         int ind = beingDisplayed.getPhotos().indexOf(selectedPhoto);
@@ -194,18 +200,14 @@ public class AlbumController implements Navigatable, LogoutController{
         reloadPhotos();
 
         imageListview.getSelectionModel().select(ind-1);
-        try {
-            Persistence.save(Photos.driver);}
-            catch (IOException ex) {}
     }
     /**
      * Moves the selected photo down in the album's list view.
      * If the selected photo is the last one, it won't do anything.
      *
      * @param e The event that triggered the action.
-     * @throws MalformedURLException if the path to the photo file is incorrect.
      */
-    public void moveDown(ActionEvent e) throws MalformedURLException{
+    public void moveDown(ActionEvent e){
         if(selectedPhoto == null)
             return;
         int ind = beingDisplayed.getPhotos().indexOf(selectedPhoto);
@@ -276,10 +278,8 @@ public class AlbumController implements Navigatable, LogoutController{
      * it is added to the album and the album view is updated.
      *
      * @param e The event that triggered the action.
-     * @throws IOException if there's an error reading the file.
-     * @throws MalformedURLException if the path to the photo file is incorrect.
      */
-    public void addPhoto(ActionEvent e) throws  IOException, MalformedURLException{
+    public void addPhoto(ActionEvent e){
         File selected = chooser.showOpenDialog(new Stage());
 
         if (selected == null)
@@ -336,19 +336,19 @@ public class AlbumController implements Navigatable, LogoutController{
     /**
      * Reloads all the photos from the currently being displayed album into the list view.
      *
-     * @throws MalformedURLException if the path to the photo file is incorrect.
      */
-    private void reloadPhotos() throws MalformedURLException {
+    private void reloadPhotos(){
         imageList.clear();
         hboxes.clear();
         setSelectedPhoto(null);
         for(Photo ph : beingDisplayed.getPhotos()){
             ImageView image = new ImageView();
 
-            image.setImage(new Image(ph.getFilepath().toURI().toURL().toExternalForm()));
-            image.setPreserveRatio(true);
-            image.fitWidthProperty().bind(imageListview.widthProperty().divide(3)); // assuming you have 3 columns
-
+            try {
+                image.setImage(new Image(ph.getFilepath().toURI().toURL().toExternalForm()));
+                image.setPreserveRatio(true);
+                image.fitWidthProperty().bind(imageListview.widthProperty().divide(3)); // assuming you have 3 columns
+            }catch(MalformedURLException ex){}
             HBox entry = makeHBox(ph);
             imageList.add(image);
             hboxes.add(entry);
@@ -361,11 +361,12 @@ public class AlbumController implements Navigatable, LogoutController{
      * Removes the currently selected photo from the album and updates the list view.
      *
      * @param e The event that triggered the action.
-     * @throws MalformedURLException if the path to the photo file is incorrect.
      */
-    public void removePhoto(ActionEvent e) throws MalformedURLException{
-        if(selectedPhoto == null)
+    public void removePhoto(ActionEvent e){
+        if(selectedPhoto == null){
+            showAlert("Invalid Selection - ERROR", "There is no photo selected", Alert.AlertType.ERROR);
             return;
+        }
         beingDisplayed.removePhoto(selectedPhoto);
         reloadPhotos();
 
@@ -377,11 +378,12 @@ public class AlbumController implements Navigatable, LogoutController{
      * Adds a caption to the selected photo based on the user input from the caption text field.
      *
      * @param e The event that triggered the action.
-     * @throws MalformedURLException if the path to the photo file is incorrect.
      */
-    public void addCaption(ActionEvent e) throws MalformedURLException{
-        if(selectedPhoto == null)
+    public void addCaption(ActionEvent e){
+        if(selectedPhoto == null){
+            showAlert("Invalid Selection - ERROR", "There is no photo selected", Alert.AlertType.ERROR);
             return;
+        }
         Text temp = (Text) imageListview.getSelectionModel().getSelectedItem().getChildren().get(1);
         temp.setText(captionInput.getText() + " | ");
 
@@ -393,9 +395,8 @@ public class AlbumController implements Navigatable, LogoutController{
      * the photo is then removed from the current album.
      *
      * @param e The event that triggered the action.
-     * @throws MalformedURLException if the path to the photo file is incorrect.
      */
-    public void movePhoto(ActionEvent e) throws MalformedURLException{
+    public void movePhoto(ActionEvent e) {
         if(copyPhoto(null))
             removePhoto(null);
     }
@@ -407,8 +408,10 @@ public class AlbumController implements Navigatable, LogoutController{
      * @return True if the photo was successfully copied, false otherwise.
      */
     public Boolean copyPhoto(ActionEvent e){
-        if(selectedPhoto == null)
+        if(selectedPhoto == null){
+            showAlert("Invalid Selection - ERROR", "There is no photo selected", Alert.AlertType.ERROR);
             return false;
+        }
 
         System.out.println(Photos.driver.getCurrentUser().getAlbumNameList());
         ArrayList<String> userAlbums = (ArrayList<String>) Photos.driver.getCurrentUser().getAlbumNameList().clone();
@@ -442,8 +445,10 @@ public class AlbumController implements Navigatable, LogoutController{
      * @param e The event that triggered the action.
      */
     public void nextPhoto(ActionEvent e){
-        if(imageListview.getSelectionModel().getSelectedIndices().size() == 0)
+        if(imageListview.getSelectionModel().getSelectedIndices().size() == 0){
+            showAlert("Invalid Selection - ERROR", "There is no photo selected", Alert.AlertType.ERROR);
             return;
+        }
 
         int currInd = imageListview.getSelectionModel().getSelectedIndices().get(0);
         int nextInd;
@@ -460,8 +465,10 @@ public class AlbumController implements Navigatable, LogoutController{
      * @param e The event that triggered the action.
      */
     public void previousPhoto(ActionEvent e){
-        if(imageListview.getSelectionModel().getSelectedIndices().size() == 0)
+        if(imageListview.getSelectionModel().getSelectedIndices().size() == 0){
+            showAlert("Invalid Selection - ERROR", "There is no photo selected", Alert.AlertType.ERROR);
             return;
+        }
         int currInd = imageListview.getSelectionModel().getSelectedIndices().get(0);
         int nextInd;
         if (currInd <= 0)
@@ -476,9 +483,8 @@ public class AlbumController implements Navigatable, LogoutController{
      * Logs out the current user and returns to the login view.
      *
      * @param e The event that triggered the action.
-     * @throws IOException if an I/O error occurs during logout.
      */
-    public void logOut(ActionEvent e) throws IOException{
+    public void logOut(ActionEvent e){
         logMeOut(e);
     }
     /**
@@ -493,9 +499,8 @@ public class AlbumController implements Navigatable, LogoutController{
      * Returns to the previous view, typically the non-admin user's album list view.
      *
      * @param e The event that triggered the action.
-     * @throws IOException if an I/O error occurs during the scene transition.
      */
-    public void goBack(ActionEvent e) throws IOException{
+    public void goBack(ActionEvent e){
         Photos.driver.getCurrentUser().lookAt("");
         switchScene("/Photos71/src/gui/fxml/NonAdminPage.fxml", e.getSource());
     }
@@ -505,7 +510,7 @@ public class AlbumController implements Navigatable, LogoutController{
      * @param e The event that triggered the action.
      */
     public void addKeyToPreset(ActionEvent e){
-        if(tag1 == null || tag1.equals("")){
+        if(tag1.getText() == null || tag1.getText().equals("")){
             showAlert("Invalid Input - ERROR", "There is no text in the Tag Key text field", Alert.AlertType.ERROR);
             return;
         }

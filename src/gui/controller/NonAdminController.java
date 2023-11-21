@@ -116,9 +116,8 @@ public class NonAdminController implements LogoutController, Navigatable{ // def
      * Opens the selected album for viewing.
      *
      * @param e The event that triggered this action.
-     * @throws IOException If an error occurs during the scene change.
      */
-    public void openAlbum(ActionEvent e) throws IOException{
+    public void openAlbum(ActionEvent e) {
         if(albumsList.getSelectionModel().getSelectedItem() == null){
             showAlert("Invalid Selection - ERROR", "There is no album selected", Alert.AlertType.ERROR);
             return;
@@ -145,12 +144,15 @@ public class NonAdminController implements LogoutController, Navigatable{ // def
 
         Optional<String> enteredAlbumNameOpt = td.showAndWait();
 
-        if(!enteredAlbumNameOpt.isPresent()) {
+        if(!enteredAlbumNameOpt.isPresent())
+            return;
+
+        if(enteredAlbumNameOpt.get().trim().equals("")){
             showAlert("Invalid Input - ERROR", "Album name must be at least 1 character", Alert.AlertType.ERROR);
             return;
         }
 
-        String enteredAlbumName = enteredAlbumNameOpt.get();
+        String enteredAlbumName = enteredAlbumNameOpt.get().trim();
 
         if(Photos.driver.getCurrentUser().albumNames.contains(enteredAlbumName)){
             showAlert("Invalid Input - ERROR", "Album \"" + enteredAlbumName + "\" already exists", Alert.AlertType.ERROR);
@@ -177,7 +179,11 @@ public class NonAdminController implements LogoutController, Navigatable{ // def
 
         Optional<String> enteredAlbumNameOpt = td.showAndWait();
 
-        if(!enteredAlbumNameOpt.isPresent()) {
+        if(!enteredAlbumNameOpt.isPresent()){
+            return;
+        }
+
+        if(enteredAlbumNameOpt.get().length() < 1) {
             showAlert("Invalid Input - ERROR", "Album name must be at least 1 character", Alert.AlertType.ERROR);
             return;
         }
@@ -196,9 +202,8 @@ public class NonAdminController implements LogoutController, Navigatable{ // def
      * Initiates a search for albums based on the user's input.
      *
      * @param e The event that triggered this action.
-     * @throws IOException If an error occurs during scene change.
      */
-    public void search(ActionEvent e) throws IOException{
+    public void search(ActionEvent e){
         popupAndWait("/Photos71/src/gui/fxml/SearchPage.fxml", "*","Photo Search");
         switchScene("/Photos71/src/gui/fxml/NonAdminPage.fxml",e.getSource());
     }
@@ -238,9 +243,8 @@ public class NonAdminController implements LogoutController, Navigatable{ // def
      * Logs out the current user.
      *
      * @param e The event that triggered this action.
-     * @throws IOException If an error occurs during logging out.
      */
-    public void logOut(ActionEvent e) throws IOException {
+    public void logOut(ActionEvent e) {
         logMeOut(e);
     }
     /**
